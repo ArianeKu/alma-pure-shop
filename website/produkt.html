@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Produkt – Alma Pure (Demo-Shop)</title>
+  <meta name="description" content="Produktdetails bei Alma Pure, einem fiktiven Demo-Shop: Beschreibung, Inhaltsstoffe und Anwendung.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="images/alma-pure-symbol.svg">
+</head>
+
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <div class="kopfbereich">
+  <div class="demo-hinweis">
+      Demo-Shop: Alma Pure ist ein fiktives Übungsprojekt. Es gibt keine echten Bestellungen oder Zahlungen.
+    </div>
+  
+    <!-- KOPFZEILE (gleich wie auf der Startseite) -->
+    <header>
+      <div class="header-inner">
+        <a class="logo" href="index.html">
+          <img src="images/alma-pure-symbol.svg" alt="" width="40" height="40">
+          <span>Alma Pure</span>
+        </a>
+        <!-- Button nur auf dem Handy sichtbar (siehe css/style.css, Abschnitt 17, und js/app.js) -->
+        <button type="button" class="menue-button" aria-expanded="false" aria-controls="hauptmenue">Menü</button>
+        <nav id="hauptmenue" aria-label="Hauptmenü">
+          <ul>
+            <li><a href="index.html">Start</a></li>
+            <li><a href="produkte.html">Produkte</a></li>
+            <li><a href="philosophie.html">Unsere Philosophie</a></li>
+            <li><a class="warenkorb-link" href="warenkorb.html">Warenkorb (0)</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  </div>
+
+  <main id="inhalt">
+    <section>
+      <div class="container">
+        <a class="zurueck" href="produkte.html">← Zu allen Produkten</a>
+
+        <!-- Hier füllt JavaScript das gewählte Produkt ein (siehe Skript unten) -->
+        <div id="produkt-detail" class="produkt-detail" aria-live="polite">
+          <noscript><p>Bitte aktivieren Sie JavaScript, um das Produkt zu sehen, oder besuchen Sie unsere <a href="produkte.html">Produktübersicht</a>.</p></noscript>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FUSSZEILE (gleich wie auf der Startseite) -->
+  <footer class="seitenfuss">
+    <div class="container">
+      <div class="fuss-grid">
+        <div>
+          <p class="logo" style="font-size:1.4rem; margin-bottom:.5rem;">Alma Pure</p>
+          <p>Pflege, die Haut ab 40 versteht. Klare Inhaltsstoffe.</p>
+        </div>
+        <nav aria-label="Shop">
+          <ul>
+            <li><a href="produkte.html">Produkte</a></li>
+            <li><a href="philosophie.html">Philosophie</a></li>
+            <li><a href="warenkorb.html">Warenkorb</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Rechtliches">
+          <ul>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="fuss-demo">Dies ist ein Demo-Shop zu Lernzwecken. Alle Produkte, Preise, Namen und Bewertungen sind erfunden. Es werden keine echten Bestellungen oder Zahlungen verarbeitet.</p>
+    </div>
+  </footer>
+
+  <script src="js/produkte.js"></script>
+  <script src="js/warenkorb.js"></script>
+  <script>
+    // 1) Welches Produkt? Die Nummer steht in der Adresse: produkt.html?id=4
+    const adressParameter = new URLSearchParams(window.location.search);
+    const produkt = findeProdukt(adressParameter.get("id"));
+    const bereich = document.getElementById("produkt-detail");
+
+    if (!produkt) {
+      // 2a) Nummer fehlt oder gibt es nicht: freundliche Meldung statt leerer Seite
+      document.title = "Produkt nicht gefunden – Alma Pure (Demo-Shop)";
+      bereich.innerHTML = `
+        <div>
+          <h1>Produkt nicht gefunden</h1>
+          <p>Dieses Produkt gibt es leider nicht. Schauen Sie gern in unsere <a href="produkte.html">Produktübersicht</a>.</p>
+        </div>`;
+    } else {
+      // 2b) Produkt gefunden: Seitentitel setzen und Inhalt aufbauen
+      document.title = produkt.name + " – Alma Pure (Demo-Shop)";
+
+      // Preis (beim Set mit durchgestrichenem Preis und Ersparnis)
+      let preisHtml = formatPreis(produkt.preis);
+      if (produkt.altPreis) {
+        preisHtml += ' <span class="alt">statt <s>' + formatPreis(produkt.altPreis) + '</s></span>';
+      }
+      const ersparnis = produkt.altPreis
+        ? '<p class="produkt-hinweis">Sie sparen ' + formatPreis(produkt.altPreis - produkt.preis) + ' gegenüber dem Einzelkauf.</p>'
+        : '<p class="produkt-hinweis">Inhalt: ' + produkt.groesse + '</p>';
+
+      // Eigenschaften als kleine Kennzeichen
+      let eigenschaften = "<li>" + produkt.kategorie + "</li>";
+      if (produkt.vegan) eigenschaften += "<li>Vegan</li>";
+      if (produkt.duftfrei) eigenschaften += "<li>Duftfrei</li>";
+
+      // Beim Set: Liste der enthaltenen Produkte. Sonst: Inhaltsstoffe mit Erklärung.
+      let inhaltHtml;
+      if (produkt.enthaelt) {
+        const eintraege = produkt.enthaelt.map(function (id) {
+          const einzel = findeProdukt(id);
+          return '<li><a href="produkt.html?id=' + einzel.id + '">' + einzel.name + '</a> · ' + einzel.groesse + '</li>';
+        }).join("");
+        inhaltHtml = '<h2>Das Set enthält</h2><ul class="set-liste">' + eintraege + '</ul>';
+      } else {
+        const eintraege = produkt.inhaltsstoffe.map(function (i) {
+          return '<dt>' + i.name + '</dt><dd>' + i.wofuer + '</dd>';
+        }).join("");
+        inhaltHtml = '<h2>Inhaltsstoffe</h2><dl class="inhaltsstoffe">' + eintraege + '</dl>' +
+          '<p class="testdaten-hinweis">Hinweis: Die Inhaltsstoffe sind vereinfachte Testdaten dieses Demo-Shops und keine echten INCI-Angaben.</p>';
+      }
+
+      bereich.innerHTML = `
+        <div class="produkt-bild"><img src="${produkt.bild}" alt="${produkt.alt}" width="1200" height="1200"></div>
+        <div class="produkt-info">
+          <span class="kategorie">${produkt.kategorie}</span>
+          <h1>${produkt.name}</h1>
+          <p class="produkt-preis">${preisHtml}</p>
+          ${ersparnis}
+          <p>${produkt.kurztext}</p>
+          <ul class="eigenschaften">${eigenschaften}</ul>
+          <button type="button" class="button" id="in-den-warenkorb" data-id="${produkt.id}">In den Warenkorb</button>
+          <p class="warenkorb-meldung" id="warenkorb-meldung" role="status"></p>
+          <h2>Anwendung</h2>
+          <p>${produkt.anwendung}</p>
+          <p>Hauttyp: ${produkt.hauttyp}</p>
+          ${inhaltHtml}
+        </div>`;
+
+      // Klick auf den Button: Produkt in den Warenkorb legen und Rückmeldung zeigen
+      const meldung = document.getElementById("warenkorb-meldung");
+      document.getElementById("in-den-warenkorb").addEventListener("click", function () {
+        fuegeHinzu(produkt.id);
+        meldung.innerHTML = "Zum Warenkorb hinzugefügt. <a href=\"warenkorb.html\">Warenkorb ansehen</a>";
+      });
+    }
+  </script>
+  <script src="js/app.js"></script>
+</body>
+</html>

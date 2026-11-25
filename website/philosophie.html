@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unsere Philosophie – Alma Pure (Demo-Shop)</title>
+  <meta name="description" content="Die Philosophie von Alma Pure, einem fiktiven Demo-Shop: klar benannte Inhaltsstoffe und klare Worte dazu, worauf wir verzichten.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="images/alma-pure-symbol.svg">
+</head>
+
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <div class="kopfbereich">
+  <div class="demo-hinweis">
+      Demo-Shop: Alma Pure ist ein fiktives Übungsprojekt. Es gibt keine echten Bestellungen oder Zahlungen.
+    </div>
+  
+    <!-- KOPFZEILE (gleich wie auf der Startseite) -->
+    <header>
+      <div class="header-inner">
+        <a class="logo" href="index.html">
+          <img src="images/alma-pure-symbol.svg" alt="" width="40" height="40">
+          <span>Alma Pure</span>
+        </a>
+        <!-- Button nur auf dem Handy sichtbar (siehe css/style.css, Abschnitt 17, und js/app.js) -->
+        <button type="button" class="menue-button" aria-expanded="false" aria-controls="hauptmenue">Menü</button>
+        <nav id="hauptmenue" aria-label="Hauptmenü">
+          <ul>
+            <li><a href="index.html">Start</a></li>
+            <li><a href="produkte.html">Produkte</a></li>
+            <li><a href="philosophie.html" aria-current="page">Unsere Philosophie</a></li>
+            <li><a class="warenkorb-link" href="warenkorb.html">Warenkorb (0)</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  </div>
+
+  <main id="inhalt">
+
+    <!-- SEITENKOPF -->
+    <section class="seiten-kopf" aria-labelledby="seitentitel">
+      <div class="container">
+        <span class="ueberzeile">Unsere Philosophie</span>
+        <h1 id="seitentitel">Wesentliches bleibt. Alles andere darf gehen.</h1>
+        <p class="einleitung">Pflege, die Haut ab 40 versteht. Klare Inhaltsstoffe. Auf dieser Seite erklären wir ruhig und verständlich, was uns wichtig ist und worauf wir bewusst verzichten.</p>
+      </div>
+    </section>
+
+    <!-- DER NAME -->
+    <section aria-labelledby="name-titel">
+      <div class="container textspalte">
+        <h2 id="name-titel">Was „Alma Pure“ bedeutet</h2>
+        <p>Alma bedeutet „nährend“, Pure bedeutet „rein“. Zusammen beschreiben die Wörter, was wir uns unter guter Pflege vorstellen: wohltuend, einfach und ohne unnötigen Ballast.</p>
+        <p>Wir richten uns an Frauen, die bewusst einkaufen und gern verstehen, was in ihrer Pflege steckt. Deshalb sprechen wir Klartext statt Fachjargon.</p>
+        <p><small>Hinweis: Der Name „Alma Pure“ ist für dieses Übungsprojekt erfunden.</small></p>
+      </div>
+    </section>
+
+    <!-- DREI GRUNDSÄTZE -->
+    <section class="bestseller" aria-labelledby="grundsaetze-titel">
+      <div class="container">
+        <div class="section-kopf">
+          <h2 id="grundsaetze-titel">Drei Grundsätze</h2>
+          <p>Daran orientieren wir uns bei jedem Produkt.</p>
+        </div>
+        <div class="grundsaetze-grid">
+          <article class="grundsatz">
+            <span class="ueberzeile">Grundsatz 1</span>
+            <h3>Klar benannt</h3>
+            <p>Wir nennen jeden Inhaltsstoff und erklären in einfachen Worten, wofür er da ist. Sie sehen auf einen Blick, was in Ihrer Pflege steckt.</p>
+          </article>
+          <article class="grundsatz">
+            <span class="ueberzeile">Grundsatz 2</span>
+            <h3>Genau beschrieben</h3>
+            <p>Wir beschreiben genau, was ein Produkt enthält und wie Sie es anwenden. Was Sie lesen, können Sie nachvollziehen. Das gibt Ihnen eine Grundlage für Ihre eigene Entscheidung.</p>
+          </article>
+          <article class="grundsatz">
+            <span class="ueberzeile">Grundsatz 3</span>
+            <h3>Achtsam verpackt</h3>
+            <p>Wir wählen Verpackungen, die sich gut recyceln lassen, und halten sie so schlicht wie möglich.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- OHNE-LISTE AUSFÜHRLICH -->
+    <section class="ohne-detail" aria-labelledby="ohne-titel" style="background: var(--creme);">
+      <div class="container">
+        <div class="section-kopf">
+          <h2 id="ohne-titel">Worauf wir bewusst verzichten</h2>
+          <p>Unsere „Ohne-Liste“ ist kurz und konkret. So wissen Sie genau, was Sie erwartet.</p>
+        </div>
+        <div class="ohne-detail-grid">
+          <div class="ohne-eintrag" style="background: var(--weiss);">
+            <h3>Ohne Mikroplastik</h3>
+            <p>Wir setzen keine Kunststoffpartikel als Inhaltsstoff ein. Texturen entstehen bei uns durch pflanzliche Öle und Wachse.</p>
+          </div>
+          <div class="ohne-eintrag" style="background: var(--weiss);">
+            <h3>Ohne Parabene</h3>
+            <p>Parabene sind eine Gruppe von Konservierungsstoffen. Wir verzichten auf sie und nennen bei jedem Produkt offen, wie es haltbar gemacht wird.</p>
+          </div>
+          <div class="ohne-eintrag" style="background: var(--weiss);">
+            <h3>Ohne synthetische Duftstoffe</h3>
+            <p>Unsere Produkte duften höchstens dezent nach ihren natürlichen Bestandteilen. Das Körperöl „Sanft“ ist komplett duftfrei.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WOFÜR WIR STEHEN -->
+    <section aria-labelledby="mit-titel">
+      <div class="container">
+        <div class="section-kopf">
+          <h2 id="mit-titel">Wofür wir stehen</h2>
+        </div>
+        <ul class="mit-liste">
+          <li><strong>Vegan</strong><br>Alle Produkte kommen ohne tierische Inhaltsstoffe aus.</li>
+          <li><strong>Recycelbare Verpackungen</strong><br>Wir achten darauf, dass sich Flaschen, Tiegel und Umkarton gut wiederverwerten lassen.</li>
+          <li><strong>Eine übersichtliche Routine</strong><br>Reinigung, Tagespflege, Nachtpflege: Mit wenigen Schritten kommen Sie gut durch den Tag. Das Set „Basis-Routine“ fasst sie zusammen.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- EHRLICHE EINORDNUNG -->
+    <section class="stimmen" aria-labelledby="einordnung-titel">
+      <div class="container">
+        <div class="einordnung" style="background: var(--weiss);">
+          <h2 id="einordnung-titel">Ein ehrlicher Hinweis zu „Clean“</h2>
+          <p>„Clean“ ist kein geschützter Begriff. Jede Marke kann ihn anders verwenden. Deshalb stützen wir uns nicht auf das Schlagwort, sondern nennen konkret, worauf wir verzichten: Mikroplastik, Parabene und synthetische Duftstoffe.</p>
+          <p>Die Inhaltsstofflisten in diesem Demo-Shop sind vereinfachte Testdaten und keine echten Produktangaben.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABSCHLUSS -->
+    <section aria-labelledby="abschluss-titel">
+      <div class="container">
+        <div class="section-kopf" style="margin-bottom:0;">
+          <h2 id="abschluss-titel">Neugierig geworden?</h2>
+          <p>Schauen Sie sich in Ruhe um und beginnen Sie mit einer Auswahl, die einfach zu Ihnen passt.</p>
+          <p class="mehr" style="margin-top:1.5rem;"><a class="button" href="produkte.html">Produkte entdecken</a></p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FUSSZEILE (gleich wie auf der Startseite) -->
+  <footer class="seitenfuss">
+    <div class="container">
+      <div class="fuss-grid">
+        <div>
+          <p class="logo" style="font-size:1.4rem; margin-bottom:.5rem;">Alma Pure</p>
+          <p>Pflege, die Haut ab 40 versteht. Klare Inhaltsstoffe.</p>
+        </div>
+        <nav aria-label="Shop">
+          <ul>
+            <li><a href="produkte.html">Produkte</a></li>
+            <li><a href="philosophie.html">Philosophie</a></li>
+            <li><a href="warenkorb.html">Warenkorb</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Rechtliches">
+          <ul>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="fuss-demo">Dies ist ein Demo-Shop zu Lernzwecken. Alle Produkte, Preise, Namen und Bewertungen sind erfunden. Es werden keine echten Bestellungen oder Zahlungen verarbeitet.</p>
+    </div>
+  </footer>
+  <script src="js/warenkorb.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

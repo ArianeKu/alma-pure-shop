@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Warenkorb – Alma Pure (Demo-Shop)</title>
+  <meta name="description" content="Ihr Warenkorb bei Alma Pure, einem fiktiven Demo-Shop. Es gibt keine echten Bestellungen oder Zahlungen.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="images/alma-pure-symbol.svg">
+</head>
+
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <div class="kopfbereich">
+  <div class="demo-hinweis">
+      Demo-Shop: Alma Pure ist ein fiktives Übungsprojekt. Es gibt keine echten Bestellungen oder Zahlungen.
+    </div>
+  
+    <!-- KOPFZEILE (gleich wie auf der Startseite) -->
+    <header>
+      <div class="header-inner">
+        <a class="logo" href="index.html">
+          <img src="images/alma-pure-symbol.svg" alt="" width="40" height="40">
+          <span>Alma Pure</span>
+        </a>
+        <!-- Button nur auf dem Handy sichtbar (siehe css/style.css, Abschnitt 17, und js/app.js) -->
+        <button type="button" class="menue-button" aria-expanded="false" aria-controls="hauptmenue">Menü</button>
+        <nav id="hauptmenue" aria-label="Hauptmenü">
+          <ul>
+            <li><a href="index.html">Start</a></li>
+            <li><a href="produkte.html">Produkte</a></li>
+            <li><a href="philosophie.html">Unsere Philosophie</a></li>
+            <li><a class="warenkorb-link" href="warenkorb.html" aria-current="page">Warenkorb (0)</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  </div>
+
+  <main id="inhalt">
+
+    <!-- SEITENKOPF -->
+    <section class="seiten-kopf" aria-labelledby="seitentitel">
+      <div class="container">
+        <span class="ueberzeile">Ihr Warenkorb</span>
+        <h1 id="seitentitel" tabindex="-1">Warenkorb</h1>
+        <p class="einleitung">Prüfen Sie in Ruhe Ihre Auswahl. In diesem Demo-Shop wird nichts bestellt und nichts bezahlt.</p>
+      </div>
+    </section>
+
+    <!-- INHALT: JavaScript füllt diesen Bereich (siehe Skript unten) -->
+    <section aria-label="Inhalt des Warenkorbs">
+      <div class="container" id="warenkorb-inhalt">
+        <noscript><p>Bitte aktivieren Sie JavaScript, um Ihren Warenkorb zu sehen.</p></noscript>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FUSSZEILE (gleich wie auf der Startseite) -->
+  <footer class="seitenfuss">
+    <div class="container">
+      <div class="fuss-grid">
+        <div>
+          <p class="logo" style="font-size:1.4rem; margin-bottom:.5rem;">Alma Pure</p>
+          <p>Pflege, die Haut ab 40 versteht. Klare Inhaltsstoffe.</p>
+        </div>
+        <nav aria-label="Shop">
+          <ul>
+            <li><a href="produkte.html">Produkte</a></li>
+            <li><a href="philosophie.html">Philosophie</a></li>
+            <li><a href="warenkorb.html">Warenkorb</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Rechtliches">
+          <ul>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="fuss-demo">Dies ist ein Demo-Shop zu Lernzwecken. Alle Produkte, Preise, Namen und Bewertungen sind erfunden. Es werden keine echten Bestellungen oder Zahlungen verarbeitet.</p>
+    </div>
+  </footer>
+
+  <script src="js/produkte.js"></script>
+  <script src="js/warenkorb.js"></script>
+  <script>
+    const bereich = document.getElementById("warenkorb-inhalt");
+
+    // Baut den ganzen Warenkorb neu auf (leer oder mit Produkten)
+    function zeigeWarenkorb() {
+      // Nur Einträge, deren Produkt es in produkte.js wirklich gibt
+      const eintraege = ladeWarenkorb().filter(function (e) { return findeProdukt(e.id); });
+
+      if (eintraege.length === 0) {
+        bereich.innerHTML = `
+          <div class="wk-leer">
+            <h2>Ihr Warenkorb ist leer</h2>
+            <p>Stöbern Sie in Ruhe in unseren Produkten.</p>
+            <a class="button" href="produkte.html">Zu den Produkten</a>
+          </div>`;
+        return;
+      }
+
+      const zeilen = eintraege.map(function (e) {
+        const p = findeProdukt(e.id);
+        return `
+          <li class="wk-zeile">
+            <div class="wk-name">
+              <a href="produkt.html?id=${p.id}">${p.name}</a>
+              <span class="wk-klein">${p.groesse}</span>
+            </div>
+            <div class="wk-preis"><span class="wk-label">Preis: </span>${formatPreis(p.preis)}</div>
+            <div class="wk-menge" role="group" aria-label="Menge für ${p.name}">
+              <button type="button" class="menge-button" data-aktion="weniger" data-id="${p.id}" aria-label="Eine Einheit weniger: ${p.name}">−</button>
+              <span class="menge-zahl" aria-live="polite">${e.menge}</span>
+              <button type="button" class="menge-button" data-aktion="mehr" data-id="${p.id}" aria-label="Eine Einheit mehr: ${p.name}">+</button>
+            </div>
+            <div class="wk-summe"><span class="wk-label">Summe: </span>${formatPreis(p.preis * e.menge)}</div>
+            <button type="button" class="wk-entfernen" data-aktion="entfernen" data-id="${p.id}" aria-label="${p.name} entfernen">Entfernen</button>
+          </li>`;
+      }).join("");
+
+      bereich.innerHTML = `
+        <ul class="wk-liste">${zeilen}</ul>
+        <div class="wk-gesamt">
+          <p class="wk-gesamt-zeile"><span>Gesamtsumme</span> <strong>${formatPreis(berechneSumme())}</strong></p>
+          <p class="wk-klein">Versandkosten und Steuern sind in dieser Demo nicht berechnet.</p>
+          <button type="button" class="button" id="zur-kasse">Zur Kasse (Demo)</button>
+          <p class="warenkorb-meldung" id="kasse-meldung" role="status"></p>
+        </div>`;
+    }
+
+    // Ein einziger Klick-Lauscher für alle Buttons im Bereich ("Event Delegation").
+    // Welcher Button gedrückt wurde, steht in data-aktion und data-id.
+    bereich.addEventListener("click", function (ereignis) {
+      const button = ereignis.target.closest("button");
+      if (!button) return;
+
+      if (button.id === "zur-kasse") {
+        document.getElementById("kasse-meldung").textContent =
+          "Das ist ein Demo-Shop: Hier wird nichts bestellt und nichts bezahlt.";
+        return;
+      }
+
+      const aktion = button.dataset.aktion;
+      const id = Number(button.dataset.id);
+      if (!aktion) return;
+
+      const eintrag = ladeWarenkorb().find(function (e) { return e.id === id; });
+      if (aktion === "mehr")     setzeMenge(id, eintrag.menge + 1);
+      if (aktion === "weniger")  setzeMenge(id, eintrag.menge - 1);
+      if (aktion === "entfernen") entferneProdukt(id);
+
+      zeigeWarenkorb();
+
+      // Der Bereich wurde neu gebaut: Fokus zurückgeben, damit Tastatur-Nutzerinnen nicht "verloren gehen"
+      const gleicherButton = bereich.querySelector('[data-aktion="' + aktion + '"][data-id="' + id + '"]');
+      (gleicherButton || document.getElementById("seitentitel")).focus();
+    });
+
+    zeigeWarenkorb();
+  </script>
+  <script src="js/app.js"></script>
+</body>
+</html>

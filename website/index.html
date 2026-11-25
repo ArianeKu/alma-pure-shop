@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alma Pure – Pflege, die Haut ab 40 versteht (Demo-Shop)</title>
+  <meta name="description" content="Alma Pure ist ein fiktiver Demo-Shop für Clean-Beauty-Pflege. Klare Inhaltsstoffe, ruhig erklärt.">
+  <link rel="icon" type="image/svg+xml" href="images/alma-pure-symbol.svg">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <div class="kopfbereich">
+  <div class="demo-hinweis">
+      Demo-Shop: Alma Pure ist ein fiktives Übungsprojekt. Es gibt keine echten Bestellungen oder Zahlungen.
+    </div>
+  
+    <!-- KOPFZEILE -->
+    <header>
+      <div class="header-inner">
+        <a class="logo" href="index.html">
+          <img src="images/alma-pure-symbol.svg" alt="" width="40" height="40">
+          <span>Alma Pure</span>
+        </a>
+        <!-- Button nur auf dem Handy sichtbar (siehe css/style.css, Abschnitt 17, und js/app.js) -->
+        <button type="button" class="menue-button" aria-expanded="false" aria-controls="hauptmenue">Menü</button>
+        <nav id="hauptmenue" aria-label="Hauptmenü">
+          <ul>
+            <li><a href="index.html">Start</a></li>
+            <li><a href="produkte.html">Produkte</a></li>
+            <li><a href="philosophie.html">Unsere Philosophie</a></li>
+            <li><a class="warenkorb-link" href="warenkorb.html">Warenkorb (0)</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  </div>
+
+  <main id="inhalt">
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-titel">
+      <div class="container hero-inner">
+        <div>
+          <h1 id="hero-titel">Ankommen bei sich selbst.</h1>
+          <p class="einleitung">Pflege, die Haut ab 40 versteht. Klare Inhaltsstoffe, ruhig erklärt. Entdecken Sie eine Pflegeroutine, die auf das Wesentliche setzt – ohne Mikroplastik, Parabene und synthetische Duftstoffe.</p>
+          <a class="button" href="produkte.html">Produkte entdecken</a>
+        </div>
+        <!-- Hero-Bild: Foto von RDNE Stock project (Pexels), Quelle siehe images/QUELLEN.md -->
+        <figure class="hero-bild">
+          <img src="images/hero.jpg"
+               alt="Aufsicht auf eine Pflegeflasche mit Holzdeckel und einen Cremetiegel, daneben Eukalyptuszweige auf heller Marmorfläche"
+               width="1200" height="1800">
+        </figure>
+      </div>
+    </section>
+
+    <!-- DREI VORTEILE -->
+    <section aria-labelledby="vorteile-titel">
+      <div class="container">
+        <div class="section-kopf">
+          <h2 id="vorteile-titel">Was uns wichtig ist</h2>
+        </div>
+        <div class="vorteile-grid">
+          <div class="vorteil">
+            <div class="symbol" aria-hidden="true">1</div>
+            <h3>Klare Inhaltsstoffe</h3>
+            <p>Kurze Listen, die Sie verstehen. Bei jedem Produkt erklären wir, was enthalten ist.</p>
+          </div>
+          <div class="vorteil">
+            <div class="symbol" aria-hidden="true">2</div>
+            <h3>Vegan und duftstoffarm gedacht</h3>
+            <p>Alle Produkte sind vegan und kommen ohne synthetische Duftstoffe aus.</p>
+          </div>
+          <div class="vorteil">
+            <div class="symbol" aria-hidden="true">3</div>
+            <h3>Recycelbare Verpackung</h3>
+            <p>Wir wählen Verpackungen, die sich gut wiederverwerten lassen.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BESTSELLER (später per JavaScript aus js/produkte.js erzeugt) -->
+    <section class="bestseller" aria-labelledby="bestseller-titel">
+      <div class="container">
+        <div class="section-kopf">
+          <span class="ueberzeile">Unsere Bestseller</span>
+          <h2 id="bestseller-titel">Aus Routine wird Ritual.</h2>
+          <p>Eine Auswahl, mit der Sie Ihre Routine einfach beginnen können.</p>
+        </div>
+        <div class="karten-grid" id="bestseller-grid">
+          <noscript><p>Bitte aktivieren Sie JavaScript, um die Produkte zu sehen, oder besuchen Sie unsere <a href="produkte.html">Produktübersicht</a>.</p></noscript>
+        </div>
+        <p class="mehr"><a class="button" href="produkte.html">Alle Produkte ansehen</a></p>
+      </div>
+    </section>
+
+    <!-- PHILOSOPHIE-TEASER -->
+    <section aria-labelledby="philosophie-titel">
+      <div class="container philosophie-inner">
+        <div>
+          <h2 id="philosophie-titel">Wesentliches bleibt. Alles andere darf gehen.</h2>
+          <p>Alma bedeutet „nährend“, Pure „rein“. Unsere Philosophie ist einfach: Pflege soll verständlich sein. Deshalb halten wir die Inhaltsstofflisten kurz und sagen offen, worauf wir verzichten.</p>
+          <a class="button hell" href="philosophie.html">Mehr über unsere Philosophie</a>
+        </div>
+        <ul class="ohne-liste">
+          <li class="ohne-titel"><strong>Worauf wir bewusst verzichten</strong></li>
+          <li>Ohne Mikroplastik</li>
+          <li>Ohne Parabene</li>
+          <li>Ohne synthetische Duftstoffe</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- KUNDENSTIMMEN (erfunden) -->
+    <section class="stimmen" aria-labelledby="stimmen-titel">
+      <div class="container">
+        <div class="section-kopf">
+          <h2 id="stimmen-titel">Das sagen unsere Kundinnen</h2>
+        </div>
+        <div class="stimmen-grid">
+          <blockquote>
+            <p>„Die Creme fühlt sich angenehm an, und ich verstehe endlich, was auf der Packung steht.“</p>
+            <footer>– Beispiel-Kundin A., 47</footer>
+          </blockquote>
+          <blockquote>
+            <p>„Ich mag, dass es nach nichts riecht. Die Routine ist übersichtlich und schnell gemacht.“</p>
+            <footer>– Beispiel-Kundin B., 52</footer>
+          </blockquote>
+          <blockquote>
+            <p>„Die Beratung auf der Seite ist ruhig und ehrlich. Genau so wünsche ich mir das.“</p>
+            <footer>– Beispiel-Kundin C., 44</footer>
+          </blockquote>
+        </div>
+        <p class="hinweis-klein">Alle Kundenstimmen sind erfundene Testdaten für diesen Demo-Shop.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FUSSZEILE -->
+  <footer class="seitenfuss">
+    <div class="container">
+      <div class="fuss-grid">
+        <div>
+          <p class="logo" style="font-size:1.4rem; margin-bottom:.5rem;">Alma Pure</p>
+          <p>Pflege, die Haut ab 40 versteht. Klare Inhaltsstoffe.</p>
+        </div>
+        <nav aria-label="Shop">
+          <ul>
+            <li><a href="produkte.html">Produkte</a></li>
+            <li><a href="philosophie.html">Philosophie</a></li>
+            <li><a href="warenkorb.html">Warenkorb</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Rechtliches">
+          <ul>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="fuss-demo">Dies ist ein Demo-Shop zu Lernzwecken. Alle Produkte, Preise, Namen und Bewertungen sind erfunden. Es werden keine echten Bestellungen oder Zahlungen verarbeitet.</p>
+    </div>
+  </footer>
+
+  <script src="js/produkte.js"></script>
+  <script src="js/warenkorb.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

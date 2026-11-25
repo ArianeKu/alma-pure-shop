@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Produkte – Alma Pure (Demo-Shop)</title>
+  <meta name="description" content="Alle Produkte von Alma Pure, einem fiktiven Demo-Shop: Pflege für Gesicht, Augen und Körper sowie ein Set.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="images/alma-pure-symbol.svg">
+</head>
+
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <div class="kopfbereich">
+  <div class="demo-hinweis">
+      Demo-Shop: Alma Pure ist ein fiktives Übungsprojekt. Es gibt keine echten Bestellungen oder Zahlungen.
+    </div>
+  
+    <!-- KOPFZEILE (gleich wie auf der Startseite) -->
+    <header>
+      <div class="header-inner">
+        <a class="logo" href="index.html">
+          <img src="images/alma-pure-symbol.svg" alt="" width="40" height="40">
+          <span>Alma Pure</span>
+        </a>
+        <!-- Button nur auf dem Handy sichtbar (siehe css/style.css, Abschnitt 17, und js/app.js) -->
+        <button type="button" class="menue-button" aria-expanded="false" aria-controls="hauptmenue">Menü</button>
+        <nav id="hauptmenue" aria-label="Hauptmenü">
+          <ul>
+            <li><a href="index.html">Start</a></li>
+            <li><a href="produkte.html" aria-current="page">Produkte</a></li>
+            <li><a href="philosophie.html">Unsere Philosophie</a></li>
+            <li><a class="warenkorb-link" href="warenkorb.html">Warenkorb (0)</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  </div>
+
+  <main id="inhalt">
+
+    <!-- SEITENKOPF -->
+    <section class="seiten-kopf" aria-labelledby="seitentitel">
+      <div class="container">
+        <span class="ueberzeile">Unsere Produkte</span>
+        <h1 id="seitentitel">Pflege für Gesicht, Augen und Körper</h1>
+        <p class="einleitung">Wenige Produkte, klar erklärt. Wählen Sie eine Kategorie oder sehen Sie sich alles in Ruhe an.</p>
+      </div>
+    </section>
+
+    <!-- FILTER UND PRODUKTE -->
+    <section class="bestseller" aria-labelledby="liste-titel">
+      <div class="container">
+        <h2 id="liste-titel" class="nur-screenreader">Produktliste</h2>
+
+        <!-- Die Filter-Buttons erzeugt JavaScript aus den Kategorien der Produktliste -->
+        <div class="filter-leiste" id="filter-leiste" role="group" aria-label="Nach Kategorie filtern"></div>
+        <p class="filter-anzahl" id="filter-anzahl" aria-live="polite"></p>
+
+        <div class="karten-grid" id="produkt-grid">
+          <noscript><p>Bitte aktivieren Sie JavaScript, um die Produkte zu sehen.</p></noscript>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FUSSZEILE (gleich wie auf der Startseite) -->
+  <footer class="seitenfuss">
+    <div class="container">
+      <div class="fuss-grid">
+        <div>
+          <p class="logo" style="font-size:1.4rem; margin-bottom:.5rem;">Alma Pure</p>
+          <p>Pflege, die Haut ab 40 versteht. Klare Inhaltsstoffe.</p>
+        </div>
+        <nav aria-label="Shop">
+          <ul>
+            <li><a href="produkte.html">Produkte</a></li>
+            <li><a href="philosophie.html">Philosophie</a></li>
+            <li><a href="warenkorb.html">Warenkorb</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Rechtliches">
+          <ul>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="fuss-demo">Dies ist ein Demo-Shop zu Lernzwecken. Alle Produkte, Preise, Namen und Bewertungen sind erfunden. Es werden keine echten Bestellungen oder Zahlungen verarbeitet.</p>
+    </div>
+  </footer>
+
+  <script src="js/produkte.js"></script>
+  <script src="js/warenkorb.js"></script>
+  <script>
+    const filterLeiste = document.getElementById("filter-leiste");
+    const filterAnzahl = document.getElementById("filter-anzahl");
+
+    // 1) Kategorien aus der Produktliste holen (jede nur einmal) und "Alle" vorne anstellen
+    const kategorien = ["Alle"];
+    produkte.forEach(function (p) {
+      if (!kategorien.includes(p.kategorie)) kategorien.push(p.kategorie);
+    });
+
+    // 2) Zeigt die Produkte einer Kategorie und markiert den passenden Button
+    function zeigeKategorie(kategorie) {
+      const treffer = (kategorie === "Alle")
+        ? produkte
+        : produkte.filter(function (p) { return p.kategorie === kategorie; });
+
+      zeigeKarten("produkt-grid", treffer);
+      filterAnzahl.textContent = treffer.length === 1 ? "1 Produkt" : treffer.length + " Produkte";
+
+      filterLeiste.querySelectorAll("button").forEach(function (b) {
+        b.setAttribute("aria-pressed", b.dataset.kategorie === kategorie ? "true" : "false");
+      });
+    }
+
+    // 3) Für jede Kategorie einen Button bauen
+    kategorien.forEach(function (kategorie) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "filter-button";
+      button.textContent = kategorie;
+      button.dataset.kategorie = kategorie;
+      button.addEventListener("click", function () { zeigeKategorie(kategorie); });
+      filterLeiste.appendChild(button);
+    });
+
+    // 4) Beim Öffnen der Seite zuerst alle Produkte zeigen
+    zeigeKategorie("Alle");
+  </script>
+  <script src="js/app.js"></script>
+</body>
+</html>

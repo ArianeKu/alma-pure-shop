@@ -1,0 +1,343 @@
+/* ===== 0. Lokale Schriften (Reserve) =====
+   Erste Wahl bleiben Georgia und Arial (auf Windows, Mac und iPhone vorinstalliert).
+   Fehlen sie (z. B. auf Android), nimmt der Browser diese freien Schriften aus dem
+   Ordner fonts/. Er lädt eine Datei nur, wenn er sie wirklich braucht.
+   Quellen und Lizenzen: fonts/QUELLEN.txt */
+@font-face {
+  font-family: "Gelasio";
+  src: url("../fonts/gelasio-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;          /* Text sofort zeigen, Schrift tauschen, sobald geladen */
+}
+@font-face {
+  font-family: "Gelasio";
+  src: url("../fonts/gelasio-latin-400-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Arimo";
+  src: url("../fonts/arimo-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Arimo";
+  src: url("../fonts/arimo-latin-700-normal.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ===== 1. Grundeinstellungen: Farben und Schriften als Variablen ===== */
+:root {
+  --creme: #faf6f0;
+  --salbei: #6b7f5e;
+  --salbei-dunkel: #55664a;   /* etwas dunkler für guten Kontrast bei Buttons */
+  --salbei-hell: #e9efe3;
+  --text: #3a3a3a;
+  --weiss: #ffffff;
+
+  /* Schriften: der Browser nimmt die erste, die er findet */
+  --schrift-titel: Georgia, "Gelasio", "Times New Roman", serif;
+  --schrift-text: Arial, "Arimo", Helvetica, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--schrift-text);
+  font-size: 1.0625rem;       /* 17 px, mindestens 16 px */
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--creme);
+}
+
+h1, h2, h3, .logo { font-family: var(--schrift-titel); font-weight: normal; line-height: 1.25; }
+h1 { font-size: clamp(2rem, 5vw, 3.2rem); }
+h2 { font-size: clamp(1.6rem, 3.5vw, 2.1rem); margin-bottom: 1rem; }
+h3 { font-size: 1.25rem; margin-bottom: .4rem; }
+p  { margin-bottom: 1rem; }
+a  { color: var(--salbei-dunkel); }
+
+.container { max-width: 1080px; margin: 0 auto; padding: 0 1.25rem; }
+section { padding: 4.5rem 0; }
+
+/* Sichtbarer Fokus für Tastatur-Nutzung (Barrierefreiheit) */
+a:focus-visible, button:focus-visible { outline: 3px solid var(--salbei-dunkel); outline-offset: 3px; }
+
+.skip-link { position: absolute; left: -999px; top: 0; background: var(--weiss); padding: .5rem 1rem; z-index: 20; }
+.skip-link:focus { left: 0; }
+
+/* ===== 2. Demo-Hinweis ganz oben ===== */
+.demo-hinweis {
+  background: var(--salbei-dunkel);
+  color: var(--weiss);
+  text-align: center;
+  font-size: .95rem;
+  padding: .55rem 1rem;
+}
+
+/* ===== 3. Kopfzeile ===== */
+header { background: var(--weiss); border-bottom: 1px solid var(--salbei-hell); }
+.header-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding: 1rem 1.25rem; max-width: 1080px; margin: 0 auto; }
+.logo { font-size: 1.7rem; color: var(--salbei-dunkel); text-decoration: none; letter-spacing: .02em; }
+.logo { display: inline-flex; align-items: center; gap: .6rem; }
+.logo img { height: 44px; width: auto; display: block; }
+nav ul { list-style: none; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+nav a { text-decoration: none; color: var(--text); padding: .25rem 0; border-bottom: 2px solid transparent; }
+nav a:hover { border-bottom-color: var(--salbei); }
+/* Aktuelle Seite im Menü markieren */
+nav a[aria-current="page"] { border-bottom-color: var(--salbei-dunkel); }
+.warenkorb-link { background: var(--salbei-hell); border-radius: 999px; padding: .4rem 1rem; }
+
+/* Kopfbereich bleibt beim Scrollen oben stehen (Demo-Hinweis + Kopfzeile) */
+.kopfbereich { position: sticky; top: 0; z-index: 10; }
+/* Beim Sprung zu #inhalt nicht unter dem Kopfbereich verschwinden */
+html { scroll-padding-top: 8rem; }
+
+/* ===== 4. Hero (Startseite) ===== */
+.hero { background: var(--salbei-hell); padding: 5rem 0; }
+.hero-inner { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 3rem; align-items: center; }
+.hero p.einleitung { font-size: 1.2rem; max-width: 34rem; margin: 1.2rem 0 2rem; }
+.hero-bild {
+  margin: 0;
+  min-width: 0;
+  aspect-ratio: 4 / 5;
+  border-radius: 200px 200px 16px 16px;
+  overflow: hidden;
+  background: var(--salbei-hell);
+}
+.hero-bild img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;   /* Bildausschnitt: Flasche gut im Rahmen */
+  display: block;
+}
+
+.button {
+  display: inline-block;
+  background: var(--salbei-dunkel);
+  color: var(--weiss);
+  text-decoration: none;
+  padding: .85rem 2rem;
+  border-radius: 6px;
+  border: 2px solid var(--salbei-dunkel);
+  font-size: 1rem;
+}
+.button:hover { background: var(--weiss); color: var(--salbei-dunkel); }
+.button.hell { background: transparent; color: var(--salbei-dunkel); }
+.button.hell:hover { background: var(--salbei-dunkel); color: var(--weiss); }
+
+/* ===== 5. Drei Vorteile ===== */
+.vorteile-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; text-align: center; }
+.vorteil .symbol {
+  width: 64px; height: 64px; margin: 0 auto 1rem;
+  border-radius: 50%; background: var(--salbei-hell); color: var(--salbei-dunkel);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--schrift-titel); font-size: 1.6rem;
+}
+
+/* ===== 6. Bestseller ===== */
+.bestseller { background: var(--weiss); }
+.section-kopf { text-align: center; max-width: 36rem; margin: 0 auto 3rem; }
+.karten-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.75rem; }
+.karte { background: var(--creme); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+.karte-bild { aspect-ratio: 1 / 1; background: var(--salbei-hell); display: flex; align-items: center; justify-content: center; color: var(--salbei-dunkel); font-size: .95rem; text-align: center; padding: 1rem; }
+.karte-text { padding: 1.25rem; display: flex; flex-direction: column; flex: 1; }
+.kategorie { font-size: .9rem; color: var(--salbei-dunkel); letter-spacing: .05em; text-transform: uppercase; }
+.preis { font-weight: bold; margin: .4rem 0 1rem; }
+.karte .button { margin-top: auto; text-align: center; padding: .6rem 1rem; }
+.mehr { text-align: center; margin-top: 2.5rem; }
+.ueberzeile { display: block; margin-bottom: .5rem; font-size: .9rem; color: var(--salbei-dunkel); letter-spacing: .05em; text-transform: uppercase; }
+
+/* ===== 7. Philosophie-Teaser (Startseite) ===== */
+.philosophie-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+.ohne-liste { list-style: none; background: var(--salbei-hell); border-radius: 12px; padding: 2rem; }
+.ohne-liste li { padding: .5rem 0 .5rem 2rem; position: relative; }
+/* Blatt-Symbol statt Strich: kleines SVG-Blatt in Salbei, nur Dekoration */
+.ohne-liste li:not(.ohne-titel)::before { content: ""; position: absolute; left: .25rem; top: .85rem; width: 1.1rem; height: 1.1rem;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2355664a' d='M20 3C10 3 4 8 4 15c0 1.6.4 3 1 4.2C7 15 10 12 14 10c-3 2.500-5.500 5.500-7 9.200 1.200.5 2.500.8 4 .8 7 0 9-7 9-17z'/%3E%3C/svg%3E") no-repeat center / contain; }
+.ohne-liste .ohne-titel { padding-left: 0; }
+.ohne-liste strong { display: block; font-family: var(--schrift-titel); font-weight: normal; font-size: 1.2rem; margin-bottom: .5rem; }
+
+/* ===== 8. Kundenstimmen ===== */
+.stimmen { background: var(--salbei-hell); }
+.stimmen-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.75rem; }
+blockquote { background: var(--weiss); border-radius: 12px; padding: 1.75rem; }
+blockquote p { font-family: var(--schrift-titel); font-style: italic; }
+blockquote footer { font-size: .95rem; color: var(--salbei-dunkel); }
+.hinweis-klein { text-align: center; font-size: .95rem; margin-top: 1.5rem; }
+
+/* ===== 9. Fußzeile ===== */
+footer.seitenfuss { background: var(--text); color: var(--creme); padding: 3rem 0 2rem; font-size: .95rem; }
+.fuss-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+footer.seitenfuss a { color: var(--creme); }
+footer.seitenfuss ul { list-style: none; }
+footer.seitenfuss li { margin-bottom: .4rem; }
+/* kleine Kreise vor den Fußzeilen-Links */
+footer.seitenfuss ul li { padding-left: 1.1rem; position: relative; }
+footer.seitenfuss ul li::before { content: ""; position: absolute; left: 0; top: .6em; width: .45rem; height: .45rem; border: 1.500px solid var(--creme); border-radius: 50%; }
+.fuss-demo { border-top: 1px solid rgba(250,246,240,.3); padding-top: 1.25rem; }
+
+/* ===== 10. NEU: Seite "Unsere Philosophie" ===== */
+.seiten-kopf { background: var(--salbei-hell); padding: 4.5rem 0; text-align: center; }
+.seiten-kopf .einleitung { font-size: 1.2rem; max-width: 40rem; margin: 1.2rem auto 0; }
+
+/* Schmale Textspalte: angenehm zu lesen */
+.textspalte { max-width: 44rem; margin: 0 auto; }
+
+/* Die drei Grundsätze als Karten */
+.grundsaetze-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
+.grundsatz { background: var(--weiss); border-radius: 12px; padding: 1.75rem; }
+.grundsatz .ueberzeile { margin-bottom: .75rem; }
+
+/* Ohne-Liste ausführlich: Begriff + kurze Erklärung */
+.ohne-detail { background: var(--weiss); }
+.ohne-detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.75rem; }
+.ohne-eintrag { background: var(--creme); border-radius: 12px; padding: 1.75rem; border-left: 4px solid var(--salbei); }
+.ohne-eintrag p:last-child { margin-bottom: 0; }
+
+/* Mit-Liste (das, wofür wir stehen) */
+.mit-liste { list-style: none; max-width: 44rem; margin: 0 auto; }
+.mit-liste li { padding: .9rem 0 .9rem 2rem; position: relative; border-bottom: 1px solid var(--salbei-hell); }
+.mit-liste li::before { content: ""; position: absolute; left: .25rem; top: 1.3rem; width: 1.1rem; height: 1.1rem;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2355664a' d='M20 3C10 3 4 8 4 15c0 1.6.4 3 1 4.2C7 15 10 12 14 10c-3 2.500-5.500 5.500-7 9.200 1.200.5 2.500.8 4 .8 7 0 9-7 9-17z'/%3E%3C/svg%3E") no-repeat center / contain; }
+.mit-liste strong { font-family: var(--schrift-titel); font-weight: normal; font-size: 1.15rem; }
+
+/* Hinweis-Kasten für ehrliche Einordnung */
+.einordnung { background: var(--salbei-hell); border-radius: 12px; padding: 2rem; max-width: 44rem; margin: 0 auto; }
+.einordnung p:last-child { margin-bottom: 0; }
+
+/* ===== 11. NEU: Produktseite ===== */
+.zurueck { display: inline-block; margin-bottom: 1.5rem; }
+.produkt-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+.produkt-bild { aspect-ratio: 1 / 1; background: var(--salbei-hell); border-radius: 12px; display: flex; align-items: center;
+  justify-content: center; color: var(--salbei-dunkel); text-align: center; padding: 1rem; }
+.produkt-preis { font-size: 1.6rem; font-weight: bold; margin: .5rem 0 .25rem; }
+.produkt-preis .alt { font-size: 1.1rem; font-weight: normal; }
+.produkt-hinweis { margin-bottom: 1.25rem; }
+.eigenschaften { list-style: none; display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0 1.5rem; }
+.eigenschaften li { background: var(--salbei-hell); border-radius: 999px; padding: .3rem 1rem; }
+.produkt-info h2 { font-size: 1.35rem; margin: 2rem 0 .75rem; }
+.inhaltsstoffe { background: var(--creme); border-radius: 12px; padding: 1.25rem 1.5rem; }
+.inhaltsstoffe dt { font-weight: bold; margin-top: .75rem; }
+.inhaltsstoffe dt:first-child { margin-top: 0; }
+.inhaltsstoffe dd { margin-left: 0; }
+.testdaten-hinweis { margin-top: .75rem; font-size: 1rem; }
+.set-liste { list-style: none; }
+.set-liste li { padding: .5rem 0; border-bottom: 1px solid var(--salbei-hell); }
+button.button { font-family: inherit; cursor: pointer; }
+
+/* ===== 12. Handy-Ansicht (Responsive) ===== */
+@media (max-width: 800px) {
+  section { padding: 3rem 0; }
+  .hero { padding: 3rem 0; }
+  .seiten-kopf { padding: 3rem 0; }
+  .hero-inner, .philosophie-inner, .vorteile-grid, .fuss-grid, .grundsaetze-grid, .produkt-detail { grid-template-columns: 1fr; }
+  .hero-bild { aspect-ratio: 16 / 10; border-radius: 16px; order: -1; }
+  .hero-bild img { object-position: center 12%; }  /* auf dem Handy: Flasche oben im Bild lassen */
+  .header-inner { flex-direction: column; align-items: flex-start; padding: .6rem 1.25rem; gap: .4rem; }
+}
+
+/* ===== 13. NEU: Rückmeldung nach "In den Warenkorb" ===== */
+.warenkorb-meldung { margin: .75rem 0 0; min-height: 1.7em; }
+
+/* ===== 14. NEU: Warenkorb-Seite ===== */
+.wk-liste { list-style: none; background: var(--weiss); border-radius: 12px; padding: .5rem 1.5rem; }
+.wk-zeile { display: grid; grid-template-columns: 2fr 1fr auto 1fr auto; gap: 1rem; align-items: center; padding: 1.25rem 0; border-bottom: 1px solid var(--salbei-hell); }
+.wk-zeile:last-child { border-bottom: 0; }
+.wk-name a { font-family: var(--schrift-titel); font-size: 1.15rem; }
+.wk-klein { display: block; font-size: .95rem; }
+.wk-label { display: none; }
+.wk-summe { font-weight: bold; text-align: right; }
+.wk-menge { display: flex; align-items: center; gap: .5rem; }
+.menge-zahl { min-width: 2rem; text-align: center; }
+.menge-button { width: 2.75rem; height: 2.75rem; border-radius: 50%; border: 2px solid var(--salbei-dunkel); background: transparent; color: var(--salbei-dunkel); font-size: 1.25rem; font-family: inherit; cursor: pointer; }
+.menge-button:hover { background: var(--salbei-dunkel); color: var(--weiss); }
+.wk-entfernen { background: none; border: 0; color: var(--salbei-dunkel); text-decoration: underline; font-family: inherit; font-size: 1rem; cursor: pointer; padding: .5rem; }
+.wk-gesamt { max-width: 26rem; margin: 2rem 0 0 auto; background: var(--salbei-hell); border-radius: 12px; padding: 1.5rem; }
+.wk-gesamt-zeile { display: flex; justify-content: space-between; font-size: 1.3rem; margin-bottom: .25rem; }
+.wk-gesamt .button { margin-top: 1rem; }
+.wk-leer { text-align: center; max-width: 30rem; margin: 0 auto; }
+#seitentitel:focus { outline: none; }
+
+@media (max-width: 800px) {
+  .wk-zeile { grid-template-columns: 1fr auto; }
+  .wk-name { grid-column: 1 / -1; }
+  .wk-preis, .wk-summe { grid-column: 1 / -1; text-align: left; }
+  .wk-label { display: inline; }
+  .wk-gesamt { max-width: none; }
+}
+
+/* ===== 15. NEU: Filter auf der Produktseite ===== */
+.filter-leiste {
+  display: flex;
+  flex-wrap: wrap;            /* auf dem Handy rutschen Buttons in die nächste Zeile */
+  gap: .75rem;                /* Abstand zwischen den Buttons */
+  margin-bottom: 1.25rem;
+}
+.filter-button {
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--salbei-dunkel);
+  background: var(--creme);
+  border: 2px solid var(--salbei-dunkel);
+  border-radius: 999px;       /* runde "Pillen" wie die Eigenschaften-Chips */
+  min-height: 2.75rem;        /* gut antippbar auf dem Handy */
+  padding: .5rem 1.4rem;
+  cursor: pointer;
+}
+.filter-button:hover { background: var(--salbei-hell); }
+/* Aktiver Filter: gefüllt, damit klar ist, was gerade gewählt ist */
+.filter-button[aria-pressed="true"] { background: var(--salbei-dunkel); color: var(--weiss); }
+.filter-anzahl { margin-bottom: 2rem; font-size: 1rem; }
+
+/* ===== 16. NEU: Produktraster mit gleichbleibender Kartengröße ===== */
+/* auto-fill statt auto-fit: leere Spalten bleiben erhalten, eine einzelne Karte wird nicht auf volle Breite gezogen */
+#produkt-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+
+/* ===== Produktbilder: Foto füllt die quadratische Fläche ===== */
+.karte-bild:has(img), .produkt-bild:has(img) { padding: 0; overflow: hidden; }
+.karte-bild img, .produkt-bild img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ===== 17. NEU: Menü-Button für das Handy =====
+   Auf großen Bildschirmen gibt es keinen Button, die Navigation ist immer sichtbar.
+   Auf dem Handy wird die Navigation eingeklappt und per Button "Menü" geöffnet.
+   Wichtig: Das gilt nur, wenn js/app.js läuft und die Klasse "menue-bereit"
+   an die Kopfzeile gesetzt hat. Ohne JavaScript bleibt die Navigation sichtbar. */
+.menue-button { display: none; }
+
+@media (max-width: 800px) {
+  /* Logo links, Button rechts, Navigation darunter in voller Breite */
+  .menue-bereit .header-inner { flex-direction: row; align-items: center; }
+
+  .menue-bereit .menue-button {
+    display: inline-block;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--salbei-dunkel);
+    background: var(--weiss);
+    border: 2px solid var(--salbei-dunkel);
+    border-radius: 6px;
+    min-height: 2.75rem;        /* mindestens 44 px: gut antippbar */
+    padding: .4rem 1.1rem;
+    cursor: pointer;
+  }
+  /* Beim Darüberfahren und solange das Menü offen ist: leicht eingefärbt */
+  .menue-bereit .menue-button:hover,
+  .menue-bereit .menue-button[aria-expanded="true"] { background: var(--salbei-hell); }
+
+  /* Navigation zunächst versteckt, mit Klasse "offen" sichtbar */
+  .menue-bereit #hauptmenue { display: none; flex-basis: 100%; }
+  .menue-bereit #hauptmenue.offen { display: block; }
+
+  /* Menüpunkte untereinander, mit genug Platz zum Antippen */
+  .menue-bereit #hauptmenue ul { flex-direction: column; gap: 0; padding: .25rem 0 .5rem; }
+  .menue-bereit #hauptmenue li a { display: inline-block; padding: .5rem 0; }
+  .menue-bereit #hauptmenue li .warenkorb-link { padding: .4rem 1rem; margin-top: .4rem; }
+}

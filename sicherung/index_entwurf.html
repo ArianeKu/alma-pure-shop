@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alma Pure – Pflege, die Haut ab 40 versteht (Demo-Shop)</title>
+  <meta name="description" content="Alma Pure ist ein fiktiver Demo-Shop für Clean-Beauty-Pflege. Klare Inhaltsstoffe, ruhig erklärt.">
+  <link rel="icon" type="image/svg+xml" href="images/alma-pure-symbol.svg">
+
+  <style>
+    /* ===== 1. Grundeinstellungen: Farben als Variablen ===== */
+    :root {
+      --creme: #faf6f0;
+      --salbei: #6b7f5e;
+      --salbei-dunkel: #55664a;   /* etwas dunkler für guten Kontrast bei Buttons */
+      --salbei-hell: #e9efe3;
+      --text: #3a3a3a;
+      --weiss: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.0625rem;       /* 17 px, mindestens 16 px */
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--creme);
+    }
+
+    h1, h2, h3, .logo { font-family: Georgia, "Times New Roman", serif; font-weight: normal; line-height: 1.25; }
+    h1 { font-size: clamp(2rem, 5vw, 3.2rem); }
+    h2 { font-size: clamp(1.6rem, 3.5vw, 2.1rem); margin-bottom: 1rem; }
+    h3 { font-size: 1.25rem; margin-bottom: .4rem; }
+    p  { margin-bottom: 1rem; }
+    a  { color: var(--salbei-dunkel); }
+
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 1.25rem; }
+    section { padding: 4.5rem 0; }
+
+    /* Sichtbarer Fokus für Tastatur-Nutzung (Barrierefreiheit) */
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--salbei-dunkel); outline-offset: 3px; }
+
+    .skip-link { position: absolute; left: -999px; top: 0; background: var(--weiss); padding: .5rem 1rem; z-index: 20; }
+    .skip-link:focus { left: 0; }
+
+    /* ===== 2. Demo-Hinweis ganz oben ===== */
+    .demo-hinweis {
+      background: var(--salbei-dunkel);
+      color: var(--weiss);
+      text-align: center;
+      font-size: .95rem;
+      padding: .55rem 1rem;
+    }
+
+    /* ===== 3. Kopfzeile ===== */
+    header { background: var(--weiss); border-bottom: 1px solid var(--salbei-hell); }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding: 1rem 1.25rem; max-width: 1080px; margin: 0 auto; }
+    .logo { font-size: 1.7rem; color: var(--salbei-dunkel); text-decoration: none; letter-spacing: .02em; }
+    .logo { display: inline-flex; align-items: center; gap: .6rem; }
+    .logo img { height: 44px; width: auto; display: block; }
+    nav ul { list-style: none; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    nav a { text-decoration: none; color: var(--text); padding: .25rem 0; border-bottom: 2px solid transparent; }
+    nav a:hover { border-bottom-color: var(--salbei); }
+    .warenkorb-link { background: var(--salbei-hell); border-radius: 999px; padding: .4rem 1rem; }
+
+    /* Kopfbereich bleibt beim Scrollen oben stehen (Demo-Hinweis + Kopfzeile) */
+    .kopfbereich { position: sticky; top: 0; z-index: 10; }
+    html { scroll-padding-top: 8rem; }
+
+    /* ===== 4. Hero ===== */
+    .hero { background: var(--salbei-hell); padding: 5rem 0; }
+    .hero-inner { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 3rem; align-items: center; }
+    .hero p.einleitung { font-size: 1.2rem; max-width: 34rem; margin: 1.2rem 0 2rem; }
+    .hero-bild {
+      margin: 0;
+      min-width: 0;               /* Bild darf die Spalte nicht aufweiten */
+      aspect-ratio: 4 / 5;
+      border-radius: 200px 200px 16px 16px;
+      overflow: hidden;           /* Bild an der runden Form abschneiden */
+      background: var(--salbei-hell);
+    }
+    .hero-bild img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;          /* Rahmen füllen, ohne zu verzerren */
+      object-position: center 35%;
+      display: block;
+    }
+
+    .button {
+      display: inline-block;
+      background: var(--salbei-dunkel);
+      color: var(--weiss);
+      text-decoration: none;
+      padding: .85rem 2rem;
+      border-radius: 6px;
+      border: 2px solid var(--salbei-dunkel);
+      font-size: 1rem;
+    }
+    .button:hover { background: var(--weiss); color: var(--salbei-dunkel); }
+    .button.hell { background: transparent; color: var(--salbei-dunkel); }
+    .button.hell:hover { background: var(--salbei-dunkel); color: var(--weiss); }
+
+    /* ===== 5. Drei Vorteile ===== */
+    .vorteile-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; text-align: center; }
+    .vorteil .symbol {
+      width: 64px; height: 64px; margin: 0 auto 1rem;
+      border-radius: 50%; background: var(--salbei-hell); color: var(--salbei-dunkel);
+      display: flex; align-items: center; justify-content: center;
+      font-family: Georgia, serif; font-size: 1.6rem;
+    }
+
+    /* ===== 6. Bestseller ===== */
+    .bestseller { background: var(--weiss); }
+    .section-kopf { text-align: center; max-width: 36rem; margin: 0 auto 3rem; }
+    .karten-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.75rem; }
+    .karte { background: var(--creme); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+    .karte-bild { aspect-ratio: 1 / 1; background: var(--salbei-hell); display: flex; align-items: center; justify-content: center; color: var(--salbei-dunkel); font-size: .95rem; text-align: center; padding: 1rem; }
+    .karte-text { padding: 1.25rem; display: flex; flex-direction: column; flex: 1; }
+    .kategorie { font-size: .9rem; color: var(--salbei-dunkel); letter-spacing: .05em; text-transform: uppercase; }
+    .preis { font-weight: bold; margin: .4rem 0 1rem; }
+    .karte .button { margin-top: auto; text-align: center; padding: .6rem 1rem; }
+    .mehr { text-align: center; margin-top: 2.5rem; }
+    .ueberzeile { display: block; margin-bottom: .5rem; font-size: .9rem; color: var(--salbei-dunkel); letter-spacing: .05em; text-transform: uppercase; }
+
+    /* ===== 7. Philosophie-Teaser ===== */
+    .philosophie-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .ohne-liste { list-style: none; background: var(--salbei-hell); border-radius: 12px; padding: 2rem; }
+    .ohne-liste li { padding: .5rem 0 .5rem 2rem; position: relative; }
+    /* Blatt-Symbol statt Strich: kleines SVG-Blatt in Salbei, nur Dekoration */
+    .ohne-liste li:not(.ohne-titel)::before { content: ""; position: absolute; left: .25rem; top: .85rem; width: 1.1rem; height: 1.1rem;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2355664a' d='M20 3C10 3 4 8 4 15c0 1.6.4 3 1 4.2C7 15 10 12 14 10c-3 2.500-5.500 5.500-7 9.200 1.200.5 2.500.8 4 .8 7 0 9-7 9-17z'/%3E%3C/svg%3E") no-repeat center / contain; }
+    .ohne-liste .ohne-titel { padding-left: 0; }
+    .ohne-liste strong { display: block; font-family: Georgia, serif; font-weight: normal; font-size: 1.2rem; margin-bottom: .5rem; }
+
+    /* ===== 8. Kundenstimmen ===== */
+    .stimmen { background: var(--salbei-hell); }
+    .stimmen-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.75rem; }
+    blockquote { background: var(--weiss); border-radius: 12px; padding: 1.75rem; }
+    blockquote p { font-family: Georgia, serif; font-style: italic; }
+    blockquote footer { font-size: .95rem; color: var(--salbei-dunkel); }
+    .hinweis-klein { text-align: center; font-size: .95rem; margin-top: 1.5rem; }
+
+    /* ===== 9. Fußzeile ===== */
+    footer.seitenfuss { background: var(--text); color: var(--creme); padding: 3rem 0 2rem; font-size: .95rem; }
+    .fuss-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+    footer.seitenfuss a { color: var(--creme); }
+    footer.seitenfuss ul { list-style: none; }
+    footer.seitenfuss li { margin-bottom: .4rem; }
+    /* kleine Kreise vor den Fußzeilen-Links */
+    footer.seitenfuss ul li { padding-left: 1.1rem; position: relative; }
+    footer.seitenfuss ul li::before { content: ""; position: absolute; left: 0; top: .6em; width: .45rem; height: .45rem; border: 1.500px solid var(--creme); border-radius: 50%; }
+    .fuss-demo { border-top: 1px solid rgba(250,246,240,.3); padding-top: 1.25rem; }
+
+    /* ===== 10. Handy-Ansicht (Responsive) ===== */
+    @media (max-width: 800px) {
+      section { padding: 3rem 0; }
+      .hero { padding: 3rem 0; }
+      .hero-inner, .philosophie-inner, .vorteile-grid, .fuss-grid { grid-template-columns: 1fr; }
+      .hero-bild { aspect-ratio: 16 / 10; border-radius: 16px; order: -1; }
+      .hero-bild img { object-position: center 12%; }  /* auf dem Handy: Flasche oben im Bild lassen */
+      .header-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ===== Produktbilder: Foto füllt die quadratische Fläche ===== */
+    .karte-bild:has(img), .produkt-bild:has(img) { padding: 0; overflow: hidden; }
+    .karte-bild img, .produkt-bild img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <div class="kopfbereich">
+  <div class="demo-hinweis">
+      Demo-Shop: Alma Pure ist ein fiktives Übungsprojekt. Es gibt keine echten Bestellungen oder Zahlungen.
+    </div>
+  
+    <!-- KOPFZEILE -->
+    <header>
+      <div class="header-inner">
+        <a class="logo" href="index.html">
+          <img src="images/alma-pure-symbol.svg" alt="" width="40" height="40">
+          <span>Alma Pure</span>
+        </a>
+        <nav aria-label="Hauptmenü">
+          <ul>
+            <li><a href="index.html">Start</a></li>
+            <li><a href="produkte.html">Produkte</a></li>
+            <li><a href="philosophie.html">Unsere Philosophie</a></li>
+            <li><a class="warenkorb-link" href="warenkorb.html">Warenkorb (0)</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  </div>
+
+  <main id="inhalt">
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-titel">
+      <div class="container hero-inner">
+        <div>
+          <h1 id="hero-titel">Ankommen bei sich selbst.</h1>
+          <p class="einleitung">Pflege, die Haut ab 40 versteht. Klare Inhaltsstoffe, ruhig erklärt. Entdecken Sie eine Pflegeroutine, die auf das Wesentliche setzt – ohne Mikroplastik, Parabene und synthetische Duftstoffe.</p>
+          <a class="button" href="produkte.html">Produkte entdecken</a>
+        </div>
+        <!-- Hero-Bild: Foto von RDNE Stock project (Pexels), Quelle siehe images/QUELLEN.md -->
+        <figure class="hero-bild">
+          <img src="images/hero.jpg"
+               alt="Aufsicht auf eine Pflegeflasche mit Holzdeckel und einen Cremetiegel, daneben Eukalyptuszweige auf heller Marmorfläche"
+               width="1200" height="1800">
+        </figure>
+      </div>
+    </section>
+
+    <!-- DREI VORTEILE -->
+    <section aria-labelledby="vorteile-titel">
+      <div class="container">
+        <div class="section-kopf">
+          <h2 id="vorteile-titel">Was uns wichtig ist</h2>
+        </div>
+        <div class="vorteile-grid">
+          <div class="vorteil">
+            <div class="symbol" aria-hidden="true">1</div>
+            <h3>Klare Inhaltsstoffe</h3>
+            <p>Kurze Listen, die Sie verstehen. Bei jedem Produkt erklären wir, was enthalten ist.</p>
+          </div>
+          <div class="vorteil">
+            <div class="symbol" aria-hidden="true">2</div>
+            <h3>Vegan und duftstoffarm gedacht</h3>
+            <p>Alle Produkte sind vegan und kommen ohne synthetische Duftstoffe aus.</p>
+          </div>
+          <div class="vorteil">
+            <div class="symbol" aria-hidden="true">3</div>
+            <h3>Recycelbare Verpackung</h3>
+            <p>Wir wählen Verpackungen, die sich gut wiederverwerten lassen.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BESTSELLER (später per JavaScript aus js/produkte.js erzeugt) -->
+    <section class="bestseller" aria-labelledby="bestseller-titel">
+      <div class="container">
+        <div class="section-kopf">
+          <span class="ueberzeile">Unsere Bestseller</span>
+          <h2 id="bestseller-titel">Aus Routine wird Ritual.</h2>
+          <p>Eine Auswahl, mit der Sie Ihre Routine einfach beginnen können.</p>
+        </div>
+        <div class="karten-grid" id="bestseller-grid">
+          <noscript><p>Bitte aktivieren Sie JavaScript, um die Produkte zu sehen, oder besuchen Sie unsere <a href="produkte.html">Produktübersicht</a>.</p></noscript>
+        </div>
+        <p class="mehr"><a class="button" href="produkte.html">Alle Produkte ansehen</a></p>
+      </div>
+    </section>
+
+    <!-- PHILOSOPHIE-TEASER -->
+    <section aria-labelledby="philosophie-titel">
+      <div class="container philosophie-inner">
+        <div>
+          <h2 id="philosophie-titel">Wesentliches bleibt. Alles andere darf gehen.</h2>
+          <p>Alma bedeutet „nährend“, Pure „rein“. Unsere Philosophie ist einfach: Pflege soll verständlich sein. Deshalb halten wir die Inhaltsstofflisten kurz und sagen offen, worauf wir verzichten.</p>
+          <a class="button hell" href="philosophie.html">Mehr über unsere Philosophie</a>
+        </div>
+        <ul class="ohne-liste">
+          <li class="ohne-titel"><strong>Worauf wir bewusst verzichten</strong></li>
+          <li>Ohne Mikroplastik</li>
+          <li>Ohne Parabene</li>
+          <li>Ohne synthetische Duftstoffe</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- KUNDENSTIMMEN (erfunden) -->
+    <section class="stimmen" aria-labelledby="stimmen-titel">
+      <div class="container">
+        <div class="section-kopf">
+          <h2 id="stimmen-titel">Das sagen unsere Kundinnen</h2>
+        </div>
+        <div class="stimmen-grid">
+          <blockquote>
+            <p>„Die Creme fühlt sich angenehm an, und ich verstehe endlich, was auf der Packung steht.“</p>
+            <footer>– Beispiel-Kundin A., 47</footer>
+          </blockquote>
+          <blockquote>
+            <p>„Ich mag, dass es nach nichts riecht. Die Routine ist übersichtlich und schnell gemacht.“</p>
+            <footer>– Beispiel-Kundin B., 52</footer>
+          </blockquote>
+          <blockquote>
+            <p>„Die Beratung auf der Seite ist ruhig und ehrlich. Genau so wünsche ich mir das.“</p>
+            <footer>– Beispiel-Kundin C., 44</footer>
+          </blockquote>
+        </div>
+        <p class="hinweis-klein">Alle Kundenstimmen sind erfundene Testdaten für diesen Demo-Shop.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FUSSZEILE -->
+  <footer class="seitenfuss">
+    <div class="container">
+      <div class="fuss-grid">
+        <div>
+          <p class="logo" style="font-size:1.4rem; margin-bottom:.5rem;">Alma Pure</p>
+          <p>Pflege, die Haut ab 40 versteht. Klare Inhaltsstoffe.</p>
+        </div>
+        <nav aria-label="Shop">
+          <ul>
+            <li><a href="produkte.html">Produkte</a></li>
+            <li><a href="philosophie.html">Philosophie</a></li>
+            <li><a href="warenkorb.html">Warenkorb</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Rechtliches">
+          <ul>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="fuss-demo">Dies ist ein Demo-Shop zu Lernzwecken. Alle Produkte, Preise, Namen und Bewertungen sind erfunden. Es werden keine echten Bestellungen oder Zahlungen verarbeitet.</p>
+    </div>
+  </footer>
+
+  <script src="js/produkte.js"></script>
+  <script src="js/warenkorb.js"></script>
+  <script>
+    // Bestseller: Produkte mit diesen Nummern (1, 2, 4 und das Set 7) anzeigen
+    const bestsellerIds = [1, 2, 4, 7];
+    zeigeKarten("bestseller-grid", bestsellerIds.map(findeProdukt));
+  </script>
+</body>
+</html>

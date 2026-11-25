@@ -1,0 +1,32 @@
+Schriften von Alma Pure (Demo-Shop): Quellen und Lizenzen
+==========================================================
+
+Wozu sind diese Dateien da?
+Die Seite nutzt als erste Wahl die Systemschriften Georgia (Überschriften) und
+Arial (Fließtext). Die sind auf Windows, macOS und iPhone/iPad vorinstalliert.
+Sie gehören Microsoft und dürfen nicht als Datei mitgeliefert werden.
+Fehlen sie auf einem Gerät (z. B. Android oder Linux), lädt der Browser stattdessen
+die folgenden freien Ersatzschriften aus diesem Ordner. Es wird nichts von fremden
+Servern geladen.
+
+1) Gelasio – Ersatz für Georgia (gleiche Maße, ähnlicher Stil)
+   Dateien:  gelasio-latin-400-normal.woff2 (normal)
+             gelasio-latin-400-italic.woff2 (kursiv, für die Kundenstimmen)
+   Urheber:  The Gelasio Project Authors, https://github.com/SorkinType/Gelasio
+   Lizenz:   SIL Open Font License 1.1 (OFL-1.1), Volltext: LICENSE-Gelasio.txt
+   Quelle:   npm-Paket @fontsource/gelasio, Version 5.3.0 (Zeichensatz "latin"),
+             https://www.npmjs.com/package/@fontsource/gelasio
+             heruntergeladen über https://cdn.jsdelivr.net/npm/@fontsource/gelasio@5.3.0/files/
+
+2) Arimo – Ersatz für Arial (gleiche Maße)
+   Dateien:  arimo-latin-400-normal.woff2 (normal)
+             arimo-latin-700-normal.woff2 (fett, z. B. für Preise)
+   Urheber:  The Arimo Project Authors, https://github.com/googlefonts/arimo
+   Lizenz:   SIL Open Font License 1.1 (OFL-1.1), Volltext: LICENSE-Arimo.txt
+   Quelle:   npm-Paket @fontsource/arimo, Version 5.3.0 (Zeichensatz "latin"),
+             https://www.npmjs.com/package/@fontsource/arimo
+             heruntergeladen über https://cdn.jsdelivr.net/npm/@fontsource/arimo@5.3.0/files/
+
+Abgerufen am: 25.11.2026
+Der Zeichensatz "latin" enthält auch Umlaute, ß, „deutsche Anführungszeichen“, – und €.
+Die OFL erlaubt freie Nutzung und Weitergabe, solange der Lizenztext beiliegt.

@@ -1,0 +1,19 @@
+# .gitignore – diese Dateien sichert Git NICHT und lädt sie nicht auf GitHub hoch.
+# Jede Zeile ist ein Muster. Ein # leitet einen Kommentar ein.
+
+# Geheimnisse: API-Schlüssel, Passwörter und Zugangsdaten gehören in .env-Dateien
+# und dürfen nie auf GitHub landen.
+.env
+.env.*
+!.env.example
+
+# Kopien der Produktbilder (die verwendeten liegen in website/images/produkte/)
+Claude outputs/
+
+# Lokale Einstellungen von Claude Code (können persönliche Angaben enthalten)
+.claude/settings.local.json
+
+# Automatisch erzeugte Systemdateien von Windows und macOS
+Thumbs.db
+desktop.ini
+.DS_Store
