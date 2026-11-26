@@ -177,15 +177,51 @@
           ${inhaltHtml}
         </div>`;
 
-      // Klick auf den Button: Produkt in den Warenkorb legen und Rückmeldung zeigen
+      // Produkt in den Warenkorb legen und Rückmeldung zeigen.
+      // Gibt true zurück, wenn es geklappt hat (wird vom großen Button und von der Handy-Leiste genutzt).
       const meldung = document.getElementById("warenkorb-meldung");
-      document.getElementById("in-den-warenkorb").addEventListener("click", function () {
+      function legeInWarenkorb() {
         // fuegeHinzu meldet false, wenn schon die Höchstmenge (10) im Warenkorb liegt
         if (fuegeHinzu(produkt.id)) {
           meldung.innerHTML = "Zum Warenkorb hinzugefügt. <a href=\"warenkorb.html\">Warenkorb ansehen</a>";
-        } else {
-          meldung.innerHTML = "Sie haben bereits die Höchstmenge von " + HOECHSTMENGE + " Stück im Warenkorb. <a href=\"warenkorb.html\">Warenkorb ansehen</a>";
+          return true;
         }
+        meldung.innerHTML = "Sie haben bereits die Höchstmenge von " + HOECHSTMENGE + " Stück im Warenkorb. <a href=\"warenkorb.html\">Warenkorb ansehen</a>";
+        return false;
+      }
+      document.getElementById("in-den-warenkorb").addEventListener("click", legeInWarenkorb);
+
+      // 3) Kleine Leiste fürs Handy (Aussehen: css/style.css, Abschnitt 19).
+      //    Sie hängt direkt unter dem festen Kopfbereich und erscheint erst,
+      //    wenn das große Produktbild aus dem Bildschirm gescrollt ist.
+      const kopfbereich = document.querySelector(".kopfbereich");
+      kopfbereich.insertAdjacentHTML("beforeend", `
+        <div class="mini-leiste" id="mini-leiste">
+          <img src="${produkt.bild}" alt="" width="48" height="48">
+          <p class="mini-text">
+            <span class="mini-name">${produkt.name}</span>
+            <span class="mini-preis">${formatPreis(produkt.preis)}</span>
+          </p>
+          <button type="button" class="button mini-button" aria-label="${produkt.name} in den Warenkorb legen">In den Warenkorb</button>
+        </div>`);
+
+      const miniLeiste = document.getElementById("mini-leiste");
+      const miniButton = miniLeiste.querySelector(".mini-button");
+      const grossesBild = bereich.querySelector(".produkt-bild");
+
+      // Ist die Unterkante des großen Bildes schon hinter dem Kopfbereich verschwunden? Dann Leiste zeigen.
+      function pruefeMiniLeiste() {
+        const bildIstWeg = grossesBild.getBoundingClientRect().bottom < kopfbereich.offsetHeight;
+        miniLeiste.classList.toggle("sichtbar", bildIstWeg);
+      }
+      window.addEventListener("scroll", pruefeMiniLeiste);
+      window.addEventListener("resize", pruefeMiniLeiste);
+      pruefeMiniLeiste();
+
+      // Klick in der Leiste: gleiche Funktion wie der große Button, dazu kurz "Hinzugefügt" im Button
+      miniButton.addEventListener("click", function () {
+        miniButton.textContent = legeInWarenkorb() ? "Hinzugefügt" : "Höchstmenge";
+        setTimeout(function () { miniButton.textContent = "In den Warenkorb"; }, 2000);
       });
     }
   </script>

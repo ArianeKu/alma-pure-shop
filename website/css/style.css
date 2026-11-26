@@ -423,3 +423,39 @@ button.button { font-family: inherit; cursor: pointer; }
   /* Im aufgeklappten Menü nicht noch einmal zeigen */
   .menue-bereit #hauptmenue li:has(.warenkorb-link) { display: none; }
 }
+
+/* ===== 19. NEU: Kleine Produkt-Leiste auf dem Handy (Produktseite) =====
+   Hängt direkt unter dem festen Kopfbereich (position: absolute; top: 100%).
+   Sie erscheint erst, wenn das große Produktbild weggescrollt ist:
+   produkt.html setzt dann die Klasse "sichtbar".
+   Auf großen Bildschirmen gibt es sie nicht, dort bleibt das Bild links stehen. */
+.mini-leiste { display: none; }
+
+@media (max-width: 800px) {
+  .mini-leiste {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--weiss);
+    border-bottom: 1px solid var(--salbei-hell);
+    padding: .5rem 1.25rem;
+    /* zunächst unsichtbar (und per Tastatur nicht erreichbar) */
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-.5rem);
+    transition: opacity .25s, transform .25s, visibility .25s;
+  }
+  .mini-leiste.sichtbar { visibility: visible; opacity: 1; transform: none; }
+  .mini-leiste img { width: 48px; height: 48px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+  .mini-text { flex: 1; min-width: 0; margin: 0; display: flex; flex-direction: column; line-height: 1.3; }
+  .mini-preis { font-weight: bold; }
+  .mini-button { padding: .6rem .9rem; white-space: nowrap; font-family: inherit; cursor: pointer; }
+}
+/* Wer in den Systemeinstellungen "weniger Bewegung" gewählt hat: ohne Gleit-Effekt */
+@media (prefers-reduced-motion: reduce) {
+  .mini-leiste { transition: none; }
+}
