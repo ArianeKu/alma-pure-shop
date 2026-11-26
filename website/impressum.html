@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Impressum – Alma Pure (Demo-Shop)</title>
+  <meta name="description" content="Impressum von Alma Pure, einem fiktiven Demo-Shop. Platzhalterseite für ein Übungsprojekt.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="images/alma-pure-symbol.svg">
+</head>
+
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <div class="kopfbereich">
+    <div class="demo-hinweis">
+      Demo-Shop: Alma Pure ist ein fiktives Übungsprojekt. Es gibt keine echten Bestellungen oder Zahlungen.
+    </div>
+
+    <!-- KOPFZEILE (gleich wie auf der Startseite) -->
+    <header>
+      <div class="header-inner">
+        <a class="logo" href="index.html">
+          <img src="images/alma-pure-symbol.svg" alt="" width="40" height="40">
+          <span>Alma Pure</span>
+        </a>
+        <a class="warenkorb-link warenkorb-mobil" href="warenkorb.html" aria-label="Warenkorb, 0 Artikel"><span class="warenkorb-zahl">0</span></a>
+        <button type="button" class="menue-button" aria-expanded="false" aria-controls="hauptmenue">Menü</button>
+        <nav id="hauptmenue" aria-label="Hauptmenü">
+          <ul>
+            <li><a href="index.html">Start</a></li>
+            <li><a href="produkte.html">Produkte</a></li>
+            <li><a href="philosophie.html">Unsere Philosophie</a></li>
+            <li><a class="warenkorb-link" href="warenkorb.html">Warenkorb (0)</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  </div>
+
+  <main id="inhalt">
+
+    <!-- SEITENKOPF -->
+    <section class="seiten-kopf" aria-labelledby="seitentitel">
+      <div class="container">
+        <span class="ueberzeile">Rechtliches</span>
+        <h1 id="seitentitel">Impressum</h1>
+        <p class="einleitung">Dies ist eine Platzhalterseite. Alma Pure ist ein erfundener Demo-Shop zu Lernzwecken und kein echtes Unternehmen.</p>
+      </div>
+    </section>
+
+    <!-- PLATZHALTER-ANGABEN -->
+    <section aria-labelledby="angaben-titel">
+      <div class="container textspalte">
+        <h2 id="angaben-titel">Angaben zum Anbieter</h2>
+        <p>[Name des Unternehmens und Rechtsform]<br>
+          [Straße und Hausnummer]<br>
+          [Postleitzahl und Ort]</p>
+        <p>Vertreten durch: [Name der vertretungsberechtigten Person]</p>
+
+        <h2>Kontakt</h2>
+        <p>Telefon: [Telefonnummer]<br>
+          E-Mail: [E-Mail-Adresse]</p>
+
+        <h2>Registereintrag und Umsatzsteuer</h2>
+        <p>Registergericht und Registernummer: [falls vorhanden]<br>
+          Umsatzsteuer-Identifikationsnummer: [falls vorhanden]</p>
+      </div>
+    </section>
+
+    <!-- HINWEIS -->
+    <section class="stimmen" aria-labelledby="hinweis-titel">
+      <div class="container">
+        <div class="einordnung" style="background: var(--weiss);">
+          <h2 id="hinweis-titel">Wichtiger Hinweis</h2>
+          <p>In einem echten Online-Shop müsste das Impressum vollständig ausgefüllt sein. Welche Angaben genau nötig sind, hängt von der Rechtsform ab und sollte fachkundig geprüft werden.</p>
+          <p>Über diesen Demo-Shop werden keine Waren verkauft, keine Bestellungen angenommen und keine Zahlungen verarbeitet.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FUSSZEILE (gleich wie auf der Startseite) -->
+  <footer class="seitenfuss">
+    <div class="container">
+      <div class="fuss-grid">
+        <div>
+          <p class="logo" style="font-size:1.4rem; margin-bottom:.5rem;">Alma Pure</p>
+          <p>Pflege, die Haut ab 40 versteht. Klare Inhaltsstoffe.</p>
+        </div>
+        <nav aria-label="Shop">
+          <ul>
+            <li><a href="produkte.html">Produkte</a></li>
+            <li><a href="philosophie.html">Philosophie</a></li>
+            <li><a href="warenkorb.html">Warenkorb</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Rechtliches">
+          <ul>
+            <li><a href="impressum.html" aria-current="page">Impressum</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="fuss-demo">Dies ist ein Demo-Shop zu Lernzwecken. Alle Produkte, Preise, Namen und Bewertungen sind erfunden. Es werden keine echten Bestellungen oder Zahlungen verarbeitet.</p>
+    </div>
+  </footer>
+  <script src="js/warenkorb.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

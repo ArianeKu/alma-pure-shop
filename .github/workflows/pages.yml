@@ -1,0 +1,43 @@
+# Veröffentlicht den Ordner website/ automatisch auf GitHub Pages.
+# Läuft jedes Mal, wenn ein neuer Stand auf den Zweig main gepusht wird.
+# Man kann es auf GitHub auch von Hand starten (Reiter "Actions").
+
+name: Website veröffentlichen
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Rechte, die GitHub für die Veröffentlichung braucht
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Nie zwei Veröffentlichungen gleichzeitig
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  veroeffentlichen:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Projekt holen
+        uses: actions/checkout@v5
+
+      - name: GitHub Pages vorbereiten
+        uses: actions/configure-pages@v5
+
+      - name: Ordner website/ einpacken
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: website
+
+      - name: Veröffentlichen
+        id: deployment
+        uses: actions/deploy-pages@v4
