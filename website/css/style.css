@@ -182,6 +182,8 @@ blockquote footer { font-size: 1rem; color: var(--salbei-dunkel); }
 footer.seitenfuss { background: var(--text); color: var(--creme); padding: 3rem 0 2rem; font-size: 1rem; }
 .fuss-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
 footer.seitenfuss a { color: var(--creme); }
+/* Schriftzug "Alma Pure" in der Fußzeile: helles Salbei statt Dunkelgrün, sonst zu wenig Kontrast auf Dunkelgrau */
+footer.seitenfuss .logo { color: var(--salbei-hell); }
 footer.seitenfuss ul { list-style: none; }
 footer.seitenfuss li { margin-bottom: .4rem; }
 /* kleine Kreise vor den Fußzeilen-Links */
