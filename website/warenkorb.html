@@ -123,11 +123,24 @@
           </li>`;
       }).join("");
 
+      // Rechnung: Warenwert + Versand = Gesamtsumme
+      const warenwert = berechneSumme();
+      const versand = berechneVersand(warenwert);
+      const gesamt = warenwert + versand;
+
+      // Hinweis, wie viel bis zur kostenlosen Lieferung fehlt (oder dass sie schon erreicht ist)
+      const versandHinweis = versand > 0
+        ? 'Noch ' + formatPreis(VERSANDKOSTENFREI_AB - warenwert) + ' bis zur kostenlosen Lieferung.'
+        : 'Ihre Lieferung ist versandkostenfrei.';
+
       bereich.innerHTML = `
         <ul class="wk-liste">${zeilen}</ul>
         <div class="wk-gesamt">
-          <p class="wk-gesamt-zeile"><span>Gesamtsumme</span> <strong>${formatPreis(berechneSumme())}</strong></p>
-          <p class="wk-klein">Versandkosten und Steuern sind in dieser Demo nicht berechnet.</p>
+          <p class="wk-rechnung-zeile"><span>Zwischensumme</span> <span>${formatPreis(warenwert)}</span></p>
+          <p class="wk-rechnung-zeile"><span>Versand</span> <span>${versand > 0 ? formatPreis(versand) : "kostenlos"}</span></p>
+          <p class="wk-versand-hinweis">${versandHinweis}</p>
+          <p class="wk-gesamt-zeile"><span>Gesamtsumme</span> <strong>${formatPreis(gesamt)}</strong></p>
+          <p class="wk-hinweis">inkl. MwSt. Demo-Shop: Es wird nichts bestellt und nichts bezahlt.</p>
           <button type="button" class="button" id="zur-kasse">Zur Kasse (Demo)</button>
           <p class="warenkorb-meldung" id="kasse-meldung" role="status"></p>
         </div>`;

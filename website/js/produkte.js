@@ -153,6 +153,15 @@ function formatPreis(zahl) {
   return zahl.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
 }
 
+// Hilfsfunktion: Grundpreis = Preis pro 100 ml, z. B. "89,80 € / 100 ml".
+// In Deutschland muss er neben dem Preis stehen, wenn Ware nach Menge verkauft wird.
+// Bei Sets aus verschiedenen Produkten entfällt er: dann kommt ein leerer Text zurück.
+function grundpreisText(p) {
+  if (!p.groesse.endsWith(" ml")) return "";
+  const milliliter = parseFloat(p.groesse);          // "50 ml" -> 50
+  return formatPreis(p.preis / milliliter * 100) + " / 100 ml";
+}
+
 // Hilfsfunktion: sucht ein Produkt anhand seiner Nummer (id)
 function findeProdukt(id) {
   return produkte.find(function (p) { return p.id === Number(id); });
@@ -160,12 +169,13 @@ function findeProdukt(id) {
 
 // Hilfsfunktion: baut aus EINEM Produkt den HTML-Text einer Produktkarte
 function erzeugeKarte(p) {
-  // Beim Set zeigen wir den alten Preis durchgestrichen, bei den anderen die Größe
+  // Beim Set zeigen wir den alten Preis durchgestrichen, bei den anderen Größe und Grundpreis
   let preisText;
   if (p.altPreis) {
     preisText = formatPreis(p.preis) + ' <span style="font-weight:normal">statt <s>' + formatPreis(p.altPreis) + '</s></span>';
   } else {
-    preisText = formatPreis(p.preis) + ' <span style="font-weight:normal">· ' + p.groesse + '</span>';
+    preisText = formatPreis(p.preis) + ' <span style="font-weight:normal">· ' + p.groesse + '</span>' +
+      '<span class="grundpreis">(' + grundpreisText(p) + ')</span>';
   }
 
   return `

@@ -62,6 +62,7 @@ h2 { font-size: clamp(1.6rem, 3.5vw, 2.1rem); margin-bottom: 1rem; }
 h3 { font-size: 1.25rem; margin-bottom: .4rem; }
 p  { margin-bottom: 1rem; }
 a  { color: var(--salbei-dunkel); }
+small { font-size: 1rem; }   /* Browser macht <small> sonst kleiner als 16 px */
 
 .container { max-width: 1080px; margin: 0 auto; padding: 0 1.25rem; }
 section { padding: 4.5rem 0; }
@@ -77,7 +78,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--salbei-dunkel);
   background: var(--salbei-dunkel);
   color: var(--weiss);
   text-align: center;
-  font-size: .95rem;
+  font-size: 1rem;
   padding: .55rem 1rem;
 }
 
@@ -147,13 +148,14 @@ html { scroll-padding-top: 8rem; }
 .section-kopf { text-align: center; max-width: 36rem; margin: 0 auto 3rem; }
 .karten-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.75rem; }
 .karte { background: var(--creme); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
-.karte-bild { aspect-ratio: 1 / 1; background: var(--salbei-hell); display: flex; align-items: center; justify-content: center; color: var(--salbei-dunkel); font-size: .95rem; text-align: center; padding: 1rem; }
+.karte-bild { aspect-ratio: 1 / 1; background: var(--salbei-hell); display: flex; align-items: center; justify-content: center; color: var(--salbei-dunkel); font-size: 1rem; text-align: center; padding: 1rem; }
 .karte-text { padding: 1.25rem; display: flex; flex-direction: column; flex: 1; }
-.kategorie { font-size: .9rem; color: var(--salbei-dunkel); letter-spacing: .05em; text-transform: uppercase; }
+.kategorie { font-size: 1rem; color: var(--salbei-dunkel); letter-spacing: .05em; text-transform: uppercase; }
 .preis { font-weight: bold; margin: .4rem 0 1rem; }
+.preis .grundpreis { display: block; font-weight: normal; font-size: 1rem; }   /* Grundpreis in eigener Zeile */
 .karte .button { margin-top: auto; text-align: center; padding: .6rem 1rem; }
 .mehr { text-align: center; margin-top: 2.5rem; }
-.ueberzeile { display: block; margin-bottom: .5rem; font-size: .9rem; color: var(--salbei-dunkel); letter-spacing: .05em; text-transform: uppercase; }
+.ueberzeile { display: block; margin-bottom: .5rem; font-size: 1rem; color: var(--salbei-dunkel); letter-spacing: .05em; text-transform: uppercase; }
 
 /* ===== 7. Philosophie-Teaser (Startseite) ===== */
 .philosophie-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
@@ -170,11 +172,11 @@ html { scroll-padding-top: 8rem; }
 .stimmen-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.75rem; }
 blockquote { background: var(--weiss); border-radius: 12px; padding: 1.75rem; }
 blockquote p { font-family: var(--schrift-titel); font-style: italic; }
-blockquote footer { font-size: .95rem; color: var(--salbei-dunkel); }
-.hinweis-klein { text-align: center; font-size: .95rem; margin-top: 1.5rem; }
+blockquote footer { font-size: 1rem; color: var(--salbei-dunkel); }
+.hinweis-klein { text-align: center; font-size: 1rem; margin-top: 1.5rem; }
 
 /* ===== 9. Fußzeile ===== */
-footer.seitenfuss { background: var(--text); color: var(--creme); padding: 3rem 0 2rem; font-size: .95rem; }
+footer.seitenfuss { background: var(--text); color: var(--creme); padding: 3rem 0 2rem; font-size: 1rem; }
 .fuss-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
 footer.seitenfuss a { color: var(--creme); }
 footer.seitenfuss ul { list-style: none; }
@@ -233,6 +235,32 @@ footer.seitenfuss ul li::before { content: ""; position: absolute; left: 0; top:
 .set-liste li { padding: .5rem 0; border-bottom: 1px solid var(--salbei-hell); }
 button.button { font-family: inherit; cursor: pointer; }
 
+/* Brotkrumen (Weg zurück): Startseite / Produkte / Produktname */
+.brotkrumen { margin-bottom: 1.5rem; }
+.brotkrumen ol { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem; padding: 0; margin: 0; }
+.brotkrumen li + li::before { content: "/"; margin-right: .4rem; color: var(--salbei-dunkel); }
+.brotkrumen [aria-current="page"] { font-weight: bold; }
+
+/* Kurzbeschreibung, Preiszusatz und großer Warenkorb-Button */
+.produkt-kurztext { font-size: 1.1rem; margin: .5rem 0 1rem; }
+.preis-zusatz { font-size: 1rem; margin: 0 0 .25rem; }
+.button-gross { width: 100%; max-width: 22rem; font-size: 1.1rem; padding: 1rem 2rem; }
+
+/* Kasten "Versand und Rückgabe" */
+.versand-box { background: var(--salbei-hell); border-radius: 12px; padding: 1.25rem 1.5rem; margin-top: 1.5rem; }
+.produkt-info .versand-box h2 { margin-top: 0; font-size: 1.2rem; }
+.versand-box dl, .produktdaten { display: grid; grid-template-columns: max-content 1fr; gap: .5rem 1.25rem; margin: 0; }
+.versand-box dt, .produktdaten dt { font-weight: bold; }
+.versand-box dd, .produktdaten dd { margin: 0; }
+.versand-demo { font-size: 1rem; margin: .75rem 0 0; }
+
+/* Technische Daten */
+.produktdaten { background: var(--weiss); border-radius: 12px; padding: 1.25rem 1.5rem; }
+@media (max-width: 500px) {
+  .versand-box dl, .produktdaten { grid-template-columns: 1fr; gap: .1rem; }
+  .versand-box dd, .produktdaten dd { margin-bottom: .5rem; }
+}
+
 /* ===== 12. Handy-Ansicht (Responsive) ===== */
 @media (max-width: 800px) {
   section { padding: 3rem 0; }
@@ -252,7 +280,7 @@ button.button { font-family: inherit; cursor: pointer; }
 .wk-zeile { display: grid; grid-template-columns: 2fr 1fr auto 1fr auto; gap: 1rem; align-items: center; padding: 1.25rem 0; border-bottom: 1px solid var(--salbei-hell); }
 .wk-zeile:last-child { border-bottom: 0; }
 .wk-name a { font-family: var(--schrift-titel); font-size: 1.15rem; }
-.wk-klein { display: block; font-size: .95rem; }
+.wk-klein { display: block; font-size: 1rem; }
 .wk-label { display: none; }
 .wk-summe { font-weight: bold; text-align: right; }
 .wk-menge { display: flex; align-items: center; gap: .5rem; }
@@ -261,7 +289,12 @@ button.button { font-family: inherit; cursor: pointer; }
 .menge-button:hover { background: var(--salbei-dunkel); color: var(--weiss); }
 .wk-entfernen { background: none; border: 0; color: var(--salbei-dunkel); text-decoration: underline; font-family: inherit; font-size: 1rem; cursor: pointer; padding: .5rem; }
 .wk-gesamt { max-width: 26rem; margin: 2rem 0 0 auto; background: var(--salbei-hell); border-radius: 12px; padding: 1.5rem; }
-.wk-gesamt-zeile { display: flex; justify-content: space-between; font-size: 1.3rem; margin-bottom: .25rem; }
+.wk-gesamt-zeile { display: flex; justify-content: space-between; font-size: 1.3rem; margin-bottom: .25rem;
+  border-top: 1px solid var(--salbei); padding-top: .75rem; }
+/* Rechnung im Warenkorb: Zwischensumme und Versand, darunter der Hinweis zur kostenlosen Lieferung */
+.wk-rechnung-zeile { display: flex; justify-content: space-between; margin-bottom: .25rem; }
+.wk-versand-hinweis { font-size: 1rem; margin-bottom: .75rem; }
+.wk-hinweis { font-size: 1rem; margin-bottom: 0; }
 .wk-gesamt .button { margin-top: 1rem; }
 .wk-leer { text-align: center; max-width: 30rem; margin: 0 auto; }
 #seitentitel:focus { outline: none; }

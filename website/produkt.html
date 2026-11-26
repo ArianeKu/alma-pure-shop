@@ -41,7 +41,14 @@
   <main id="inhalt">
     <section>
       <div class="container">
-        <a class="zurueck" href="produkte.html">← Zu allen Produkten</a>
+        <!-- Weg zurück ("Brotkrumen"): zeigt, wo man gerade ist. Den Produktnamen setzt JavaScript ein. -->
+        <nav class="brotkrumen" aria-label="Sie sind hier">
+          <ol>
+            <li><a href="index.html">Startseite</a></li>
+            <li><a href="produkte.html">Produkte</a></li>
+            <li aria-current="page" id="brotkrumen-produkt">Produkt</li>
+          </ol>
+        </nav>
 
         <!-- Hier füllt JavaScript das gewählte Produkt ein (siehe Skript unten) -->
         <div id="produkt-detail" class="produkt-detail" aria-live="polite">
@@ -94,8 +101,9 @@
           <p>Dieses Produkt gibt es leider nicht. Schauen Sie gern in unsere <a href="produkte.html">Produktübersicht</a>.</p>
         </div>`;
     } else {
-      // 2b) Produkt gefunden: Seitentitel setzen und Inhalt aufbauen
+      // 2b) Produkt gefunden: Seitentitel und Brotkrumen setzen, dann Inhalt aufbauen
       document.title = produkt.name + " – Alma Pure (Demo-Shop)";
+      document.getElementById("brotkrumen-produkt").textContent = produkt.name;
 
       // Preis (beim Set mit durchgestrichenem Preis und Ersparnis)
       let preisHtml = formatPreis(produkt.preis);
@@ -104,12 +112,20 @@
       }
       const ersparnis = produkt.altPreis
         ? '<p class="produkt-hinweis">Sie sparen ' + formatPreis(produkt.altPreis - produkt.preis) + ' gegenüber dem Einzelkauf.</p>'
-        : '<p class="produkt-hinweis">Inhalt: ' + produkt.groesse + '</p>';
+        : '<p class="produkt-hinweis">Inhalt: ' + produkt.groesse + ' (' + grundpreisText(produkt) + ')</p>';
 
       // Eigenschaften als kleine Kennzeichen
       let eigenschaften = "<li>" + produkt.kategorie + "</li>";
       if (produkt.vegan) eigenschaften += "<li>Vegan</li>";
       if (produkt.duftfrei) eigenschaften += "<li>Duftfrei</li>";
+
+      // Technische Daten als übersichtliche Liste (Begriff : Wert)
+      const produktdaten =
+        '<dt>Inhalt</dt><dd>' + produkt.groesse + '</dd>' +
+        '<dt>Kategorie</dt><dd>' + produkt.kategorie + '</dd>' +
+        '<dt>Geeignet für</dt><dd>' + produkt.hauttyp + '</dd>' +
+        '<dt>Vegan</dt><dd>' + (produkt.vegan ? 'ja' : 'nein') + '</dd>' +
+        '<dt>Duftstoffe</dt><dd>' + (produkt.duftfrei ? 'ohne Duftstoffe' : 'mit Duftstoffen') + '</dd>';
 
       // Beim Set: Liste der enthaltenen Produkte. Sonst: Inhaltsstoffe mit Erklärung.
       let inhaltHtml;
@@ -132,15 +148,28 @@
         <div class="produkt-info">
           <span class="kategorie">${produkt.kategorie}</span>
           <h1>${produkt.name}</h1>
+          <p class="produkt-kurztext">${produkt.kurztext}</p>
           <p class="produkt-preis">${preisHtml}</p>
+          <p class="preis-zusatz">inkl. MwSt., zzgl. <a href="#versand">Versand</a></p>
           ${ersparnis}
-          <p>${produkt.kurztext}</p>
           <ul class="eigenschaften">${eigenschaften}</ul>
-          <button type="button" class="button" id="in-den-warenkorb" data-id="${produkt.id}">In den Warenkorb</button>
+          <button type="button" class="button button-gross" id="in-den-warenkorb" data-id="${produkt.id}">In den Warenkorb</button>
           <p class="warenkorb-meldung" id="warenkorb-meldung" role="status"></p>
+
+          <div class="versand-box" id="versand">
+            <h2>Versand und Rückgabe</h2>
+            <dl>
+              <dt>Versandkosten</dt><dd>${formatPreis(VERSANDKOSTEN)}, ab ${formatPreis(VERSANDKOSTENFREI_AB)} Bestellwert versandkostenfrei</dd>
+              <dt>Lieferzeit</dt><dd>2–4 Werktage innerhalb Deutschlands</dd>
+              <dt>Rückgabe</dt><dd>14 Tage Widerrufsrecht ab Erhalt der Ware</dd>
+            </dl>
+            <p class="versand-demo">Beispielangaben: In diesem Demo-Shop wird nichts verschickt.</p>
+          </div>
+
           <h2>Anwendung</h2>
           <p>${produkt.anwendung}</p>
-          <p>Hauttyp: ${produkt.hauttyp}</p>
+          <h2>Produktdetails</h2>
+          <dl class="produktdaten">${produktdaten}</dl>
           ${inhaltHtml}
         </div>`;
 

@@ -12,6 +12,11 @@
 
 const WARENKORB_SCHLUESSEL = "almaPureWarenkorb";
 
+// Versandregeln (erfundene Beispielwerte für die Demo).
+// Nur HIER ändern: Produktseite und Warenkorb lesen beide diese Werte.
+const VERSANDKOSTEN = 4.90;          // Euro pro Bestellung
+const VERSANDKOSTENFREI_AB = 79;     // ab diesem Warenwert kostenlos
+
 // Lädt den Warenkorb aus dem Browser-Speicher. Ist nichts da: leere Liste.
 function ladeWarenkorb() {
   try {
@@ -90,6 +95,16 @@ function berechneSumme() {
     const produkt = findeProdukt(eintrag.id);
     return produkt ? summe + produkt.preis * eintrag.menge : summe;
   }, 0);
+}
+
+// Berechnet die Versandkosten zu einem Warenwert.
+// Leerer Warenkorb oder Warenwert ab 79 €: 0 €. Sonst: 4,90 €.
+// Wir vergleichen in Cent (gerundet), weil der Computer bei Kommazahlen
+// manchmal winzig daneben liegt (z. B. 78,99999999 statt 79).
+function berechneVersand(warenwert) {
+  const cent = Math.round(warenwert * 100);
+  if (cent === 0 || cent >= VERSANDKOSTENFREI_AB * 100) return 0;
+  return VERSANDKOSTEN;
 }
 
 // Beim Laden jeder Seite den Zähler einmal auffrischen.
