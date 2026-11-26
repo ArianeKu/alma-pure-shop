@@ -225,6 +225,13 @@ footer.seitenfuss ul li::before { content: ""; position: absolute; left: 0; top:
 .produkt-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
 .produkt-bild { aspect-ratio: 1 / 1; background: var(--salbei-hell); border-radius: 12px; display: flex; align-items: center;
   justify-content: center; color: var(--salbei-dunkel); text-align: center; padding: 1rem; }
+/* Großer Bildschirm: Das Bild bleibt links stehen, während der Text rechts weiterscrollt.
+   "top" = Abstand nach oben, damit das Bild unter dem festen Kopfbereich bleibt.
+   Nur ab 801 px Breite (auf dem Handy steht das Bild über dem Text) und
+   ab 700 px Höhe (auf niedrigen Bildschirmen würde das Bild sonst abgeschnitten). */
+@media (min-width: 801px) and (min-height: 700px) {
+  .produkt-bild { position: sticky; top: 9rem; }
+}
 .produkt-preis { font-size: 1.6rem; font-weight: bold; margin: .5rem 0 .25rem; }
 .produkt-preis .alt { font-size: 1.1rem; font-weight: normal; }
 .produkt-hinweis { margin-bottom: 1.25rem; }
