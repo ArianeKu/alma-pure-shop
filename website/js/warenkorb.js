@@ -17,6 +17,9 @@ const WARENKORB_SCHLUESSEL = "almaPureWarenkorb";
 const VERSANDKOSTEN = 4.90;          // Euro pro Bestellung
 const VERSANDKOSTENFREI_AB = 79;     // ab diesem Warenwert kostenlos
 
+// Höchstmenge pro Produkt. Die kleinste Menge ist 1 (darunter: "Entfernen" benutzen).
+const HOECHSTMENGE = 10;
+
 // Lädt den Warenkorb aus dem Browser-Speicher. Ist nichts da: leere Liste.
 function ladeWarenkorb() {
   try {
@@ -37,11 +40,13 @@ function speichereWarenkorb(warenkorb) {
 }
 
 // Legt ein Produkt in den Warenkorb. Ist es schon drin, erhöht sich die Menge.
+// Gibt true zurück, wenn es geklappt hat, und false, wenn schon 10 Stück drin sind.
 function fuegeHinzu(id) {
   const warenkorb = ladeWarenkorb();
   const vorhanden = warenkorb.find(function (eintrag) { return eintrag.id === Number(id); });
 
   if (vorhanden) {
+    if (vorhanden.menge >= HOECHSTMENGE) return false;   // Grenze erreicht: nichts ändern
     vorhanden.menge += 1;
   } else {
     warenkorb.push({ id: Number(id), menge: 1 });
@@ -49,6 +54,7 @@ function fuegeHinzu(id) {
 
   speichereWarenkorb(warenkorb);
   aktualisiereZaehler();
+  return true;
 }
 
 // Zählt alle Stücke im Warenkorb zusammen (2 Cremes + 1 Öl = 3).
@@ -56,20 +62,31 @@ function anzahlImWarenkorb() {
   return ladeWarenkorb().reduce(function (summe, eintrag) { return summe + eintrag.menge; }, 0);
 }
 
-// Schreibt die Anzahl in den Menüpunkt "Warenkorb (…)" in der Kopfzeile.
+// Schreibt die Anzahl in "Warenkorb (…)" in der Kopfzeile.
+// Es gibt zwei solche Links: einen im Menü und einen fürs Handy neben dem Menü-Button.
 function aktualisiereZaehler() {
-  const text = "Warenkorb (" + anzahlImWarenkorb() + ")";
+  const anzahl = anzahlImWarenkorb();
   document.querySelectorAll(".warenkorb-link").forEach(function (link) {
-    link.textContent = text;
+    if (link.classList.contains("warenkorb-mobil")) {
+      // Handy: Symbol + Zahl. Vorleseprogramme lesen "Warenkorb, 2 Artikel".
+      link.querySelector(".warenkorb-zahl").textContent = anzahl;
+      link.setAttribute("aria-label", "Warenkorb, " + anzahl + " Artikel");
+    } else {
+      link.textContent = "Warenkorb (" + anzahl + ")";
+    }
   });
 }
 
-// Setzt die Menge eines Produkts. Bei 0 oder weniger wird es entfernt.
+// Leert den ganzen Warenkorb (z. B. nach der Demo-Bestellung).
+function leereWarenkorb() {
+  speichereWarenkorb([]);
+  aktualisiereZaehler();
+}
+
+// Setzt die Menge eines Produkts, immer zwischen 1 und 10.
+// Ein zu kleiner oder zu großer Wert wird auf die Grenze gesetzt.
 function setzeMenge(id, menge) {
-  if (menge < 1) {
-    entferneProdukt(id);
-    return;
-  }
+  menge = Math.min(Math.max(menge, 1), HOECHSTMENGE);
   const warenkorb = ladeWarenkorb();
   const eintrag = warenkorb.find(function (e) { return e.id === Number(id); });
   if (eintrag) {

@@ -25,6 +25,8 @@
           <span>Alma Pure</span>
         </a>
         <!-- Button nur auf dem Handy sichtbar (siehe css/style.css, Abschnitt 17, und js/app.js) -->
+        <!-- Warenkorb mit Zähler: nur auf dem Handy, immer sichtbar neben dem Menü-Button -->
+        <a class="warenkorb-link warenkorb-mobil" href="warenkorb.html" aria-current="page" aria-label="Warenkorb, 0 Artikel"><span class="warenkorb-zahl">0</span></a>
         <button type="button" class="menue-button" aria-expanded="false" aria-controls="hauptmenue">Menü</button>
         <nav id="hauptmenue" aria-label="Hauptmenü">
           <ul>
@@ -114,9 +116,11 @@
             </div>
             <div class="wk-preis"><span class="wk-label">Preis: </span>${formatPreis(p.preis)}</div>
             <div class="wk-menge" role="group" aria-label="Menge für ${p.name}">
-              <button type="button" class="menge-button" data-aktion="weniger" data-id="${p.id}" aria-label="Eine Einheit weniger: ${p.name}">−</button>
+              <!-- Bei 1 ist "−" gesperrt, bei 10 ist "+" gesperrt (disabled) -->
+              <button type="button" class="menge-button" data-aktion="weniger" data-id="${p.id}" aria-label="Eine Einheit weniger: ${p.name}" ${e.menge <= 1 ? "disabled" : ""}>−</button>
               <span class="menge-zahl" aria-live="polite">${e.menge}</span>
-              <button type="button" class="menge-button" data-aktion="mehr" data-id="${p.id}" aria-label="Eine Einheit mehr: ${p.name}">+</button>
+              <button type="button" class="menge-button" data-aktion="mehr" data-id="${p.id}" aria-label="Eine Einheit mehr: ${p.name}" ${e.menge >= HOECHSTMENGE ? "disabled" : ""}>+</button>
+              ${e.menge >= HOECHSTMENGE ? '<span class="wk-klein wk-grenze">Höchstmenge erreicht</span>' : ""}
             </div>
             <div class="wk-summe"><span class="wk-label">Summe: </span>${formatPreis(p.preis * e.menge)}</div>
             <button type="button" class="wk-entfernen" data-aktion="entfernen" data-id="${p.id}" aria-label="${p.name} entfernen">Entfernen</button>
@@ -141,9 +145,32 @@
           <p class="wk-versand-hinweis">${versandHinweis}</p>
           <p class="wk-gesamt-zeile"><span>Gesamtsumme</span> <strong>${formatPreis(gesamt)}</strong></p>
           <p class="wk-hinweis">inkl. MwSt. Demo-Shop: Es wird nichts bestellt und nichts bezahlt.</p>
-          <button type="button" class="button" id="zur-kasse">Zur Kasse (Demo)</button>
-          <p class="warenkorb-meldung" id="kasse-meldung" role="status"></p>
+          <button type="button" class="button" id="zur-kasse">Demo-Bestellung abschicken</button>
         </div>`;
+    }
+
+    // Demo-Bestellung: Bestätigung zeigen und den Warenkorb leeren.
+    // Es wird nichts gesendet, nichts bezahlt und keine E-Mail verschickt.
+    function zeigeBestaetigung() {
+      const anzahl = anzahlImWarenkorb();
+      const warenwert = berechneSumme();
+      const gesamt = warenwert + berechneVersand(warenwert);
+      // Erfundene Bestellnummer, z. B. DEMO-4821 (Zufallszahl zwischen 1000 und 9999)
+      const nummer = "DEMO-" + Math.floor(1000 + Math.random() * 9000);
+
+      leereWarenkorb();
+
+      bereich.innerHTML = `
+        <div class="wk-leer wk-bestaetigung">
+          <h2 id="bestaetigung-titel" tabindex="-1">Vielen Dank für Ihre Demo-Bestellung</h2>
+          <p>Ihre Bestellnummer: <strong>${nummer}</strong></p>
+          <p>${anzahl} Artikel, Gesamtsumme ${formatPreis(gesamt)} inkl. MwSt. und Versand.</p>
+          <p>Dies ist ein Demo-Shop: Es wurde nichts bestellt, nichts bezahlt und nichts verschickt. Sie erhalten keine E-Mail.</p>
+          <a class="button" href="produkte.html">Weiter stöbern</a>
+        </div>`;
+
+      // Fokus auf die Überschrift: Screenreader lesen die Bestätigung sofort vor
+      document.getElementById("bestaetigung-titel").focus();
     }
 
     // Ein einziger Klick-Lauscher für alle Buttons im Bereich ("Event Delegation").
@@ -153,8 +180,7 @@
       if (!button) return;
 
       if (button.id === "zur-kasse") {
-        document.getElementById("kasse-meldung").textContent =
-          "Das ist ein Demo-Shop: Hier wird nichts bestellt und nichts bezahlt.";
+        zeigeBestaetigung();
         return;
       }
 
@@ -169,9 +195,11 @@
 
       zeigeWarenkorb();
 
-      // Der Bereich wurde neu gebaut: Fokus zurückgeben, damit Tastatur-Nutzerinnen nicht "verloren gehen"
-      const gleicherButton = bereich.querySelector('[data-aktion="' + aktion + '"][data-id="' + id + '"]');
-      (gleicherButton || document.getElementById("seitentitel")).focus();
+      // Der Bereich wurde neu gebaut: Fokus zurückgeben, damit Tastatur-Nutzerinnen nicht "verloren gehen".
+      // Ist der gleiche Button jetzt gesperrt (Menge 1 oder 10), nehmen wir den anderen Mengen-Button.
+      const gleicherButton = bereich.querySelector('[data-aktion="' + aktion + '"][data-id="' + id + '"]:not([disabled])');
+      const andererButton = bereich.querySelector('.menge-button[data-id="' + id + '"]:not([disabled])');
+      (gleicherButton || andererButton || document.getElementById("seitentitel")).focus();
     });
 
     zeigeWarenkorb();

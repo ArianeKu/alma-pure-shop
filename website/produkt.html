@@ -25,6 +25,8 @@
           <span>Alma Pure</span>
         </a>
         <!-- Button nur auf dem Handy sichtbar (siehe css/style.css, Abschnitt 17, und js/app.js) -->
+        <!-- Warenkorb mit Zähler: nur auf dem Handy, immer sichtbar neben dem Menü-Button -->
+        <a class="warenkorb-link warenkorb-mobil" href="warenkorb.html" aria-label="Warenkorb, 0 Artikel"><span class="warenkorb-zahl">0</span></a>
         <button type="button" class="menue-button" aria-expanded="false" aria-controls="hauptmenue">Menü</button>
         <nav id="hauptmenue" aria-label="Hauptmenü">
           <ul>
@@ -178,8 +180,12 @@
       // Klick auf den Button: Produkt in den Warenkorb legen und Rückmeldung zeigen
       const meldung = document.getElementById("warenkorb-meldung");
       document.getElementById("in-den-warenkorb").addEventListener("click", function () {
-        fuegeHinzu(produkt.id);
-        meldung.innerHTML = "Zum Warenkorb hinzugefügt. <a href=\"warenkorb.html\">Warenkorb ansehen</a>";
+        // fuegeHinzu meldet false, wenn schon die Höchstmenge (10) im Warenkorb liegt
+        if (fuegeHinzu(produkt.id)) {
+          meldung.innerHTML = "Zum Warenkorb hinzugefügt. <a href=\"warenkorb.html\">Warenkorb ansehen</a>";
+        } else {
+          meldung.innerHTML = "Sie haben bereits die Höchstmenge von " + HOECHSTMENGE + " Stück im Warenkorb. <a href=\"warenkorb.html\">Warenkorb ansehen</a>";
+        }
       });
     }
   </script>

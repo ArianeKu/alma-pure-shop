@@ -192,7 +192,11 @@ function erzeugeKarte(p) {
         <span class="kategorie">${p.kategorie}</span>
         <h3>${p.name}</h3>
         <p class="preis">${preisText}</p>
-        <a class="button hell" href="produkt.html?id=${p.id}">Ansehen</a>
+        <div class="karte-aktionen">
+          <button type="button" class="button karte-warenkorb" data-id="${p.id}" aria-label="${p.name} in den Warenkorb legen">In den Warenkorb</button>
+          <a class="button hell" href="produkt.html?id=${p.id}">Ansehen</a>
+          <p class="karte-meldung" role="status"></p>
+        </div>
       </div>
     </article>`;
 }

@@ -153,7 +153,10 @@ html { scroll-padding-top: 8rem; }
 .kategorie { font-size: 1rem; color: var(--salbei-dunkel); letter-spacing: .05em; text-transform: uppercase; }
 .preis { font-weight: bold; margin: .4rem 0 1rem; }
 .preis .grundpreis { display: block; font-weight: normal; font-size: 1rem; }   /* Grundpreis in eigener Zeile */
-.karte .button { margin-top: auto; text-align: center; padding: .6rem 1rem; }
+.karte .button { text-align: center; padding: .6rem 1rem; }
+/* Zwei Buttons untereinander, immer am unteren Rand der Karte */
+.karte-aktionen { margin-top: auto; display: flex; flex-direction: column; gap: .5rem; }
+.karte-meldung { margin: 0; min-height: 1.7em; font-size: 1rem; }
 .mehr { text-align: center; margin-top: 2.5rem; }
 .ueberzeile { display: block; margin-bottom: .5rem; font-size: 1rem; color: var(--salbei-dunkel); letter-spacing: .05em; text-transform: uppercase; }
 
@@ -286,7 +289,11 @@ button.button { font-family: inherit; cursor: pointer; }
 .wk-menge { display: flex; align-items: center; gap: .5rem; }
 .menge-zahl { min-width: 2rem; text-align: center; }
 .menge-button { width: 2.75rem; height: 2.75rem; border-radius: 50%; border: 2px solid var(--salbei-dunkel); background: transparent; color: var(--salbei-dunkel); font-size: 1.25rem; font-family: inherit; cursor: pointer; }
-.menge-button:hover { background: var(--salbei-dunkel); color: var(--weiss); }
+.menge-button:hover:not(:disabled) { background: var(--salbei-dunkel); color: var(--weiss); }
+/* Gesperrter Button (Menge 1 oder 10): blass, Mauszeiger zeigt "nicht möglich" */
+.menge-button:disabled { opacity: .35; cursor: not-allowed; }
+.wk-menge { flex-wrap: wrap; }
+.wk-grenze { flex-basis: 100%; }
 .wk-entfernen { background: none; border: 0; color: var(--salbei-dunkel); text-decoration: underline; font-family: inherit; font-size: 1rem; cursor: pointer; padding: .5rem; }
 .wk-gesamt { max-width: 26rem; margin: 2rem 0 0 auto; background: var(--salbei-hell); border-radius: 12px; padding: 1.5rem; }
 .wk-gesamt-zeile { display: flex; justify-content: space-between; font-size: 1.3rem; margin-bottom: .25rem;
@@ -373,4 +380,37 @@ button.button { font-family: inherit; cursor: pointer; }
   .menue-bereit #hauptmenue ul { flex-direction: column; gap: 0; padding: .25rem 0 .5rem; }
   .menue-bereit #hauptmenue li a { display: inline-block; padding: .5rem 0; }
   .menue-bereit #hauptmenue li .warenkorb-link { padding: .4rem 1rem; margin-top: .4rem; }
+}
+
+/* ===== 18. NEU: Warenkorb-Zähler auf dem Handy immer sichtbar =====
+   Auf dem Handy steht "Warenkorb (…)" direkt neben dem Menü-Button,
+   statt versteckt im eingeklappten Menü. Auf großen Bildschirmen bleibt
+   er wie bisher in der Navigation. */
+.warenkorb-mobil { display: none; }
+
+@media (max-width: 800px) {
+  .menue-bereit .warenkorb-mobil {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;        /* gut antippbar */
+    gap: .35rem;
+    padding: .4rem .9rem;
+    margin-left: auto;          /* schiebt Zähler und Menü-Button nach rechts */
+    color: var(--text);
+    text-decoration: none;
+    font-weight: bold;
+  }
+  /* Taschen-Symbol vor der Zahl (als kleines Bild direkt im CSS) */
+  .menue-bereit .warenkorb-mobil::before {
+    content: "";
+    width: 1.4rem;
+    height: 1.4rem;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2355664a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 8h14l-1.2 12H6.2L5 8z'/%3E%3Cpath d='M9 8V6a3 3 0 0 1 6 0v2'/%3E%3C/svg%3E") no-repeat center / contain;
+  }
+  .menue-bereit .warenkorb-mobil[aria-current="page"] { outline: 2px solid var(--salbei-dunkel); }
+  /* Logo auf dem Handy etwas kleiner, damit alles in eine Zeile passt */
+  .menue-bereit .logo { font-size: 1.4rem; gap: .45rem; }
+  .menue-bereit .logo img { height: 36px; }
+  /* Im aufgeklappten Menü nicht noch einmal zeigen */
+  .menue-bereit #hauptmenue li:has(.warenkorb-link) { display: none; }
 }

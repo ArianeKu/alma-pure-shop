@@ -47,3 +47,21 @@ if (document.getElementById("bestseller-grid")) {
   const bestsellerIds = [1, 2, 4, 7];
   zeigeKarten("bestseller-grid", bestsellerIds.map(findeProdukt));
 }
+
+
+// ===== 3. "In den Warenkorb" direkt auf den Produktkarten =====
+// Ein einziger Klick-Lauscher für die ganze Seite ("Event Delegation").
+// Er reagiert nur auf Buttons mit der Klasse "karte-warenkorb".
+// So funktioniert er auf der Startseite und in der Produktübersicht,
+// auch für Karten, die erst später (z. B. nach dem Filtern) erzeugt werden.
+document.addEventListener("click", function (ereignis) {
+  const button = ereignis.target.closest(".karte-warenkorb");
+  if (!button) return;
+
+  const meldung = button.closest(".karte").querySelector(".karte-meldung");
+  if (fuegeHinzu(button.dataset.id)) {
+    meldung.textContent = "Zum Warenkorb hinzugefügt.";
+  } else {
+    meldung.textContent = "Höchstmenge von " + HOECHSTMENGE + " Stück erreicht.";
+  }
+});
