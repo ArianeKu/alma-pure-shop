@@ -194,9 +194,11 @@
       // 3) Kleine Leiste fürs Handy (Aussehen: css/style.css, Abschnitt 19).
       //    Sie hängt direkt unter dem festen Kopfbereich und erscheint erst,
       //    wenn das große Produktbild aus dem Bildschirm gescrollt ist.
+      //    "hidden" = grundsätzlich versteckt. Nur die Handy-Regel in style.css holt sie hervor.
+      //    So bleibt sie auch dann unsichtbar, wenn ein Browser noch eine alte style.css zwischengespeichert hat.
       const kopfbereich = document.querySelector(".kopfbereich");
       kopfbereich.insertAdjacentHTML("beforeend", `
-        <div class="mini-leiste" id="mini-leiste">
+        <div class="mini-leiste" id="mini-leiste" hidden>
           <img src="${produkt.bild}" alt="" width="48" height="48">
           <p class="mini-text">
             <span class="mini-name">${produkt.name}</span>
