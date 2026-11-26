@@ -18,6 +18,7 @@ const produkte = [
     duftfrei: true,
     vegan: true,
     kurztext: "Mildes Öl zur täglichen Reinigung des Gesichts.",
+    beschreibung: "Das Reinigungsöl löst Make-up, Sonnenschutz und Pflegereste mild und gründlich. Die Mischung aus Sonnenblumen-, Jojoba- und Mandelöl hinterlässt ein weiches, geschmeidiges Hautgefühl. Ein ruhiger Einstieg in die Abendroutine – ohne Mikroplastik, Parabene und synthetische Duftstoffe.",
     anwendung: "Auf die trockene Haut geben, sanft einmassieren und mit lauwarmem Wasser abspülen.",
     inhaltsstoffe: [
       { name: "Sonnenblumenöl", wofuer: "mildes Pflanzenöl, das Make-up und Pflegereste löst" },
@@ -38,6 +39,7 @@ const produkte = [
     duftfrei: true,
     vegan: true,
     kurztext: "Leichte Creme für den Morgen, die die Haut mit Feuchtigkeit versorgt.",
+    beschreibung: "Eine leichte Creme für den Start in den Tag. Glycerin und Aloe vera spenden Feuchtigkeit, Sheabutter und Squalan pflegen die Haut geschmeidig. Die Creme zieht rasch ein und eignet sich gut als Grundlage unter Make-up.",
     anwendung: "Morgens nach der Reinigung auf Gesicht und Hals auftragen.",
     inhaltsstoffe: [
       { name: "Wasser", wofuer: "Grundlage der Creme" },
@@ -59,6 +61,7 @@ const produkte = [
     duftfrei: true,
     vegan: true,
     kurztext: "Reichhaltige Creme für den Abend, die die Haut über Nacht pflegt.",
+    beschreibung: "Eine reichhaltigere Pflege für den Abend. Sheabutter und Mandelöl pflegen die Haut über Nacht, Glycerin bindet Feuchtigkeit. Die Textur ist cremig und angenehm – gut für Haut, die abends etwas mehr Pflege mag.",
     anwendung: "Abends nach der Reinigung auf Gesicht und Hals auftragen.",
     inhaltsstoffe: [
       { name: "Wasser", wofuer: "Grundlage der Creme" },
@@ -80,6 +83,7 @@ const produkte = [
     duftfrei: true,
     vegan: true,
     kurztext: "Leichtes Serum, das Feuchtigkeit spendet.",
+    beschreibung: "Ein leichtes, wässriges Serum als zusätzliche Feuchtigkeitsschicht unter der Creme. Hyaluronsäure und Glycerin halten Feuchtigkeit in der Haut, Panthenol pflegt. Wenige Tropfen genügen, und das Serum lässt sich gut mit Tages- und Nachtcreme kombinieren.",
     anwendung: "Morgens und abends einige Tropfen auf das gereinigte Gesicht geben und sanft einklopfen, danach die Creme auftragen.",
     inhaltsstoffe: [
       { name: "Wasser", wofuer: "Grundlage des Serums" },
@@ -101,6 +105,7 @@ const produkte = [
     duftfrei: true,
     vegan: true,
     kurztext: "Sanfte Pflege für die empfindliche Haut rund um die Augen.",
+    beschreibung: "Die Haut rund um die Augen ist dünner als im übrigen Gesicht und mag eine besonders sanfte Pflege. Die leichte Textur mit Jojobaöl und Gurkenextrakt spendet Feuchtigkeit und fühlt sich angenehm frisch an. Bewusst ohne Duftstoffe.",
     anwendung: "Morgens und abends mit dem Ringfinger sanft um die Augen auftupfen.",
     inhaltsstoffe: [
       { name: "Wasser", wofuer: "Grundlage der Pflege" },
@@ -122,6 +127,7 @@ const produkte = [
     duftfrei: true,
     vegan: true,
     kurztext: "Duftfreies Öl, das die Haut geschmeidig pflegt.",
+    beschreibung: "Ein duftfreies Pflegeöl für den ganzen Körper. Auf die noch feuchte Haut gegeben, verteilt es sich leicht und hinterlässt ein weiches, geschmeidiges Hautgefühl. Besonders angenehm für trockene Haut, etwa in den Wintermonaten.",
     anwendung: "Nach dem Duschen auf die leicht feuchte Haut geben und einmassieren.",
     inhaltsstoffe: [
       { name: "Sonnenblumenöl", wofuer: "mildes Pflanzenöl, das die Haut geschmeidig pflegt" },
@@ -144,6 +150,7 @@ const produkte = [
     duftfrei: true,
     vegan: true,
     kurztext: "Reinigungsöl, Tagescreme und Nachtcreme als Einstieg in eine einfache Pflegeroutine.",
+    beschreibung: "Drei aufeinander abgestimmte Produkte für eine einfache Routine: am Abend reinigen und reichhaltig pflegen, am Morgen leicht pflegen. Das Set eignet sich gut, wenn Sie Alma Pure in Ruhe kennenlernen möchten. Alle drei Produkte sind vegan und ohne Duftstoffe.",
     anwendung: "Reinigungsöl und Nachtcreme am Abend, Tagescreme am Morgen verwenden."
   }
 ];
